@@ -1,4 +1,4 @@
-package com.rnmusicplayer;
+package xwh.react.music;
 
 import com.facebook.react.ReactActivity;
 

@@ -1,4 +1,4 @@
-package com.rnmusicplayer;
+package xwh.react.music;
 
 import android.app.Application;
 import android.content.Context;
