@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Dimensions, TouchableNativeFeedback, ActivityIndicator } from 'react-native';
 import MusicApi from '../dao/MusicApi'
 import SongUtil from '../model/SongUtil'
 
 var mount;
 
-export default class PlayList extends Component {
+export default class SongList extends Component {
 
     constructor(props) {
         super(props);
@@ -19,11 +19,11 @@ export default class PlayList extends Component {
     loadData() {
         this.setState({ isLoading: true });
 
-        MusicApi.getPlayList("流行").then(items => {
+        MusicApi.getTopSongs(1).then(songs => {
             if (mount) {
                 this.setState({
                     isLoading: false,
-                    data: items,
+                    data: songs,
                 });
             }
         }).catch(error => console.error(error));;
@@ -67,20 +67,21 @@ export default class PlayList extends Component {
 
 
     getItemView = ({ item }) => {
-        var imageWidth = screen.width - 20;
         return (
-            <TouchableOpacity onPress={() => { console.log(item.name); }}>
+
+            <TouchableNativeFeedback onPress={() => { console.log(item.name); }}>
                 <View style={styles.item}>
                     <Image
-                        source={{ uri: `${item.coverImgUrl}?param=400y200` }}
-                        style={{ width: imageWidth, height: imageWidth * 0.5 }}
+                        source={{ uri: SongUtil.getSongImage(item) }}
+                        style={{ width: 60, height: 60 }}
                     />
                     <View style={styles.layoutText}>
                         <Text style={styles.itemTitle}>{item['name']}</Text>
+                        <Text style={styles.itemSubTitle}>{SongUtil.getArtistNames(item)}</Text>
                     </View>
                 </View>
 
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
 
         );
     }
@@ -100,13 +101,14 @@ const styles = StyleSheet.create({
     },
     item: {
         flex: 1,
-        flexDirection: 'column',
+        flexDirection: 'row',
         backgroundColor: "#eeeeee",
         justifyContent: 'space-around',   // 子元素沿主轴的对齐方式
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
         marginBottom: 10,
+        padding: 10,
         //borderRadius: 4,    // 圆角
         shadowColor: 'grey',   // 添加阴影效果
         shadowOffset: { width: 1, height: 1 },
@@ -118,10 +120,16 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',   // 子元素沿主轴的对齐方式
-        margin: 10,
+        marginLeft: 10,
+        padding: 10
     },
     itemTitle: {
         fontSize: 14,
+    },
+    itemSubTitle: {
+        fontSize: 12,
+        color: '#aaaaaa',
+        marginTop: 4,
     },
     separator: {
         width: screen.width - 20,

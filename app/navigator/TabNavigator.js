@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Recommend from '../pages/Recommend';
 import PlayList from '../pages/PlayList';
@@ -20,7 +21,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         navigationOptions: ({navigation}) => ({
             tabBarLabel:'推荐',
             tabBarIcon: ({focused, tintColor}) => (
-                <Ionicons name={'md-home'} size={iconSize} color={tintColor}/>
+                <Entypo name={'paper-plane'} size={iconSize} color={tintColor}/>
             ),
         }),
     },
@@ -30,15 +31,11 @@ const BottomTabNavigator = createBottomTabNavigator({
             tabBarLabel: '歌单',
             tabBarIcon: ({tintColor}) => (
                 <MaterialCommunityIcons
-                    name={'alpha-f-box'}
+                    name={'library-music'}
                     size={iconSize}
                     color={tintColor}
                 />
             ),
-            // 默认点击会跳转到配置的页面，这儿可以自定义点击行为。
-            //tabBarOnPress: () => {
-                //route(navigation)
-            //}
         }),
     },
     MV: {
@@ -46,15 +43,12 @@ const BottomTabNavigator = createBottomTabNavigator({
         navigationOptions: ({navigation}) => ({
             tabBarLabel: 'MV',
             tabBarIcon: ({tintColor}) => (
-                <MaterialCommunityIcons
-                    name={'format-list-bulleted'}
+                <Entypo
+                    name={'video'}
                     size={iconSize}
                     color={tintColor}
                 />
             ),
-            //tabBarOnPress: () => {
-                //route(navigation)
-            //}
         }),
     },
     Favorite: {
@@ -62,15 +56,12 @@ const BottomTabNavigator = createBottomTabNavigator({
         navigationOptions: ({navigation}) => ({
             tabBarLabel: '收藏',
             tabBarIcon: ({tintColor}) => (
-                <MaterialIcons
-                    name={'favorite'}
+                <Entypo
+                    name={'heart'}
                     size={iconSize}
                     color={tintColor}
                 />
             ),
-            //tabBarOnPress: () => {
-                //route(navigation)
-            //}
         }),
     },
 }, {
@@ -87,14 +78,16 @@ const BottomTabNavigator = createBottomTabNavigator({
         showLabel: true,
         showIcon: true,
         style: {
-            backgroundColor: '#EEEEEE',
-            height: 54,
+            backgroundColor: 'white',
+            height: 66,
         },
-        tabStyle: {
+        tabStyle: { // 调整item的高度、位置
             height: 54,
+            marginTop: 6,
         },
         labelStyle: {
             fontSize: 12,
+            marginTop: 2,
         },
     },
 }
