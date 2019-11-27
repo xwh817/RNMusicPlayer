@@ -8,8 +8,6 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-var mount;
-
 export default class PlayListItem extends React.PureComponent {
 
   render() {
@@ -26,7 +24,7 @@ export default class PlayListItem extends React.PureComponent {
           </Text>
         </View>
 
-        <TouchableNativeFeedback onPress={this._onPress}>
+        <TouchableNativeFeedback onPress={()=> this.props.onPress(item)}>
           <View
             style={{
               position: 'absolute',

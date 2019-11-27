@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text, ActivityIndicator } from 'react-native';
 import MusicApi from '../dao/MusicApi';
-import PlayListItem from '../component/PlayListItem';
+import MVItem from '../component/MVItem';
 import Toast from 'react-native-easy-toast';
 import Colors from '../values/Colors';
 
 var mount;
 
-export default class PlayListTab extends Component {
+export default class MVTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,10 +16,10 @@ export default class PlayListTab extends Component {
     };
   }
 
-  loadData() {
+  _loadData() {
     this.setState({ isLoading: true });
 
-    MusicApi.getPlayList(this.props.cat)
+    MusicApi.getMVList(this.props.url)
       .then(items => {
         if (mount) {
           this.setState({
@@ -34,7 +34,7 @@ export default class PlayListTab extends Component {
   // 页面加载完成之后，获取数据。
   componentDidMount() {
     mount = true;
-    this.loadData();
+    this._loadData();
   }
 
   componentWillUnmount() {
@@ -42,19 +42,20 @@ export default class PlayListTab extends Component {
   }
 
   render() {
+
     return (
       <View style={{ flex: 1 }}>
         {
-          this.state.isLoading ? 
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator size={46} color={'green'} animating={true} />
-          </View> 
-          :
-          <FlatList
-            data={this.state.data}
-            renderItem={this._renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={2} />
+          this.state.isLoading ?
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <ActivityIndicator size={46} color={'green'} animating={true} />
+            </View>
+            :
+            <FlatList
+              data={this.state.data}
+              renderItem={this._renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
         }
         <Toast ref={toast => { this.toast = toast }}
           position='center'
@@ -70,6 +71,6 @@ export default class PlayListTab extends Component {
   };
 
   _renderItem = ({ item }) => (
-    <PlayListItem item={item} onPress={this._onItemPress} />
+    <MVItem item={item} onPress={this._onItemPress} />
   );
 }

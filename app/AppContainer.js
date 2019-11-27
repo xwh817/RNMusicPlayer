@@ -1,7 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Home from './Home';
 import TabNavigatore from './navigator/TabNavigator';
+import Colors from './values/Colors'
 
 
 const rootNavigatior = createStackNavigator(
@@ -19,7 +19,7 @@ const rootNavigatior = createStackNavigator(
         defaultNavigationOptions: {
             header:null,    // 不显示appBar
             headerStyle: {
-                backgroundColor: '#e4511e',
+                backgroundColor: Colors.colorPrimary,
                 height: 52
             },
             headerTintColor: '#fff',

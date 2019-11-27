@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import Colors from '../values/Colors';
 import PlayListTab from './PlayListTab';
 
@@ -26,7 +26,7 @@ export default class PlayList extends Component {
     return (
       <ScrollableTabView
         style={styles.tabView}
-        renderTabBar={() => <ScrollableTabBar/>}
+        renderTabBar={() => <ScrollableTabBar />}
         tabBarBackgroundColor="white"
         tabBarActiveTextColor={Colors.colorPrimary}
         tabBarInactiveTextColor="#999999"

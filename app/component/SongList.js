@@ -41,15 +41,12 @@ export default class SongList extends Component {
                  }
 
                  render() {
-                   if (this.isLoading) {
-                     return (
-                       <ActivityIndicator
-                         size={'large'}
-                         color={'green'}
-                         animating={true}
-                       />
-                     );
-                   }
+                  if (this.state.isLoading) {
+                    return (<View style={{flex:1, justifyContent: 'center'}}>
+                      <ActivityIndicator size={46} color={'green'} animating={true} />
+                    </View>
+                    );
+                  }
                    return (
                      <View style={styles.container}>
                        <FlatList
