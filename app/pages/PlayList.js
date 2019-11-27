@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import Colors from '../values/Colors';
 import PlayListTab from './PlayListTab';
 
@@ -18,7 +18,7 @@ const types = [
   '儿童',
   '电子',
   '校园',
-  '放松',
+  '放松'
 ];
 
 export default class PlayList extends Component {
@@ -26,14 +26,15 @@ export default class PlayList extends Component {
     return (
       <ScrollableTabView
         style={styles.tabView}
+        renderTabBar={() => <ScrollableTabBar/>}
         tabBarBackgroundColor="white"
         tabBarActiveTextColor={Colors.colorPrimary}
         tabBarInactiveTextColor="#999999"
         tabBarTextStyle={styles.tabBarText}
         tabBarUnderlineStyle={styles.tabBarUnderline}>
-        {/* {types.map(item => <PlayListTab cat={item} key={item} tabLabel={item}/>)} */}
-        <PlayListTab cat="流行" key="1" tabLabel="流行" />
-        <PlayListTab cat="民谣" key="2" tabLabel="民谣" />
+        {types.map(item => (
+          <PlayListTab cat={item} key={item} tabLabel={item} />
+        ))}
       </ScrollableTabView>
     );
   }
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.pageBg,
   },
   tabBarText: {
-    fontSize: 14,
+    fontSize: 12,
     marginTop: 12,
   },
   tabBarUnderline: {
