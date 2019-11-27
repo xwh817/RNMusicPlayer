@@ -66,7 +66,11 @@ export default class SongUtil {
       imgUrl += `?param=${size}y${size}`;
     }
 
-    console.log(`imageUrl: ${imgUrl}`);
+    if (imgUrl==undefined || imgUrl == null || imgUrl.length == 0) {
+      console.log(`imageUrl is empty: ${song.name}`);
+    }
+
+    //console.log(`imageUrl: ${imgUrl}`);
     return imgUrl;
   }
 

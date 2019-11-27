@@ -15,56 +15,50 @@ const iconSize = 30;
  * routeConfigMap：路由表
  * drawConfig：自定义界面配置
  */
-const BottomTabNavigator = createBottomTabNavigator({
+const BottomTabNavigator = createBottomTabNavigator(
+  {
     Recommend: {
-        screen: Recommend,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel:'推荐',
-            tabBarIcon: ({focused, tintColor}) => (
-                <Entypo name={'paper-plane'} size={iconSize} color={tintColor}/>
-            ),
-        }),
+      screen: Recommend,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: '推荐',
+        tabBarIcon: ({focused, tintColor}) => (
+          <Entypo name={'paper-plane'} size={iconSize} color={tintColor} />
+        ),
+      }),
     },
     PlayList: {
-        screen: PlayList,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: '歌单',
-            tabBarIcon: ({tintColor}) => (
-                <MaterialCommunityIcons
-                    name={'library-music'}
-                    size={iconSize}
-                    color={tintColor}
-                />
-            ),
-        }),
+      screen: PlayList,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: '歌单',
+        tabBarIcon: ({tintColor}) => (
+          <MaterialCommunityIcons
+            name={'library-music'}
+            size={iconSize}
+            color={tintColor}
+          />
+        ),
+      }),
     },
     MV: {
-        screen: MV,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'MV',
-            tabBarIcon: ({tintColor}) => (
-                <Entypo
-                    name={'video'}
-                    size={iconSize}
-                    color={tintColor}
-                />
-            ),
-        }),
+      screen: MV,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'MV',
+        tabBarIcon: ({tintColor}) => (
+          <Entypo name={'video'} size={iconSize} color={tintColor} />
+        ),
+      }),
     },
     Favorite: {
-        screen: Favorite,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: '收藏',
-            tabBarIcon: ({tintColor}) => (
-                <Entypo
-                    name={'heart'}
-                    size={iconSize}
-                    color={tintColor}
-                />
-            ),
-        }),
+      screen: Favorite,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: '收藏',
+        tabBarIcon: ({tintColor}) => (
+          <Entypo name={'heart'} size={iconSize} color={tintColor} />
+        ),
+      }),
     },
-}, {
+  },
+  {
     initialRouteName: 'Recommend', // 设置默认的页面组件
     initialRouteParams: {title: 'Home'}, // 找这条命令不容易, 翻github翻了一个小时
 
@@ -72,26 +66,26 @@ const BottomTabNavigator = createBottomTabNavigator({
     backBehavior: null, // 点击返回退到上级界面
 
     tabBarOptions: {
-        activeTintColor: 'tomato', // 选中的颜色
-        inactiveTintColor: 'gray', // 未选中的颜色
+      activeTintColor: 'tomato', // 选中的颜色
+      inactiveTintColor: 'gray', // 未选中的颜色
 
-        showLabel: true,
-        showIcon: true,
-        style: {
-            backgroundColor: 'white',
-            height: 66,
-        },
-        tabStyle: { // 调整item的高度、位置
-            height: 54,
-            marginTop: 6,
-        },
-        labelStyle: {
-            fontSize: 12,
-            marginTop: 2,
-        },
+      showLabel: true,
+      showIcon: true,
+      style: {
+        backgroundColor: 'white',
+        height: 66,
+      },
+      tabStyle: {
+        // 调整item的高度、位置
+        height: 54,
+        marginTop: 6,
+      },
+      labelStyle: {
+        fontSize: 12,
+        marginTop: 2,
+      },
     },
-}
-
+  },
 );
 
 export default BottomTabNavigator;
