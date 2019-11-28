@@ -66,6 +66,7 @@ export default class SongList extends Component {
 
                  _onItemPress = item => {
                    console.log('_onItemPressed: ' + item.name);
+                   this.props.navigation.navigate('MusicPlayer', {song:item});
                  };
 
                  _getItemLayout = (data, index) => ({

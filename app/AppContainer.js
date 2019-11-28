@@ -2,6 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import TabNavigatore from './navigator/TabNavigator';
 import Colors from './values/Colors'
+import MusicPlayer from './pages/MusicPlayer'
 
 
 const rootNavigatior = createStackNavigator(
@@ -11,6 +12,9 @@ const rootNavigatior = createStackNavigator(
             /* navigationOptions: {
                 headerTitle: 'React Music',
             } */
+        },
+        MusicPlayer: {
+            screen: MusicPlayer,
         },
     },
     {

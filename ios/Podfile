@@ -38,6 +38,8 @@ target 'RNMusicPlayer' do
 
   pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
 
+  pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
+
   target 'RNMusicPlayerTests' do
     inherit! :search_paths
     # Pods for testing

@@ -7,6 +7,6 @@ export default class Recommend extends Component {
         /* return (<View style={{ flex: 1, lexDirection: 'row', justifyContent: 'center'}}>
             <SongList/>
         </View>); */
-        return (<SongList/>);
+        return (<SongList navigation={this.props.navigation}/>);
     }
 }
