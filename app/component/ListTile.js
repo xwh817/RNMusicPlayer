@@ -7,7 +7,7 @@ export default class ListTile extends Component {
   render() {
     return (
       <View style={styles.item}>
-        <AntDesign name={'arrowleft'} size={32}
+        <AntDesign name={'arrowleft'} size={24}
           style={styles.icon} color={'white'}
           onPress={this.props.onPress} />
         <View style={styles.layoutText}>
@@ -18,7 +18,7 @@ export default class ListTile extends Component {
             {this.props.subTitle}
           </Text>
         </View>
-        <Entypo name={'heart'} size={32} style={styles.icon} color={'pink'} />
+        <Entypo name={'heart'} size={24} style={styles.icon} color={'pink'} />
       </View>
     );
   }

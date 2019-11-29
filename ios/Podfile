@@ -40,6 +40,8 @@ target 'RNMusicPlayer' do
 
   pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
 
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
   target 'RNMusicPlayerTests' do
     inherit! :search_paths
     # Pods for testing
