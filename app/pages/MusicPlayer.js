@@ -9,7 +9,7 @@ import RotateAnimator from '../component/RotateAnimator'
 export default class MusicPlayer extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       viewRef: null,
       isPlaying: false,
     }
@@ -40,6 +40,7 @@ export default class MusicPlayer extends Component {
   render() {
     let song = this.state.song;
     return (
+      <SafeAreaView style={{flex:1}}>
       <View style={styles.page}>
         <Image
           ref={img => {
@@ -55,23 +56,26 @@ export default class MusicPlayer extends Component {
         <ListTile title={song.name}
           subTitle={SongUtil.getArtistNames(song)}
           onPress={() => this.props.navigation.pop()} />
-        <RotateAnimator duration={6000} running={this.state.isPlaying}>
-          <Image
-            roundAsCircle={true}
-            source={{ uri: SongUtil.getSongImage(song, imageSize) }}
-            style={styles.coverImage}
-          />
-        </RotateAnimator>
 
-        <TouchableOpacity onPress={()=>{
-              this.setState({
-                isPlaying: !this.state.isPlaying
-              });
-            }} >
-          <Text>播放</Text>
+
+        <TouchableOpacity onPress={() => {
+          let isPlaying = !this.state.isPlaying;
+          console.log("onPressed: " + isPlaying)
+          this.setState({
+            isPlaying: isPlaying
+          });
+        }} >
+          <RotateAnimator ref={img => {this.musicCover = img;}} duration={6000} running={this.state.isPlaying}>
+            <Image
+              roundAsCircle={true}
+              source={{ uri: SongUtil.getSongImage(song, imageSize) }}
+              style={styles.coverImage}
+            />
+          </RotateAnimator>
         </TouchableOpacity>
 
-      </View>);
+      </View>
+      </SafeAreaView>);
   }
 
 }
