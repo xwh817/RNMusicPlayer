@@ -43,6 +43,38 @@ export default class MusicPlayer extends Component {
     }
   }
 
+  _renderProgressBar() {
+    return (
+      <View style={styles.progressBar}>
+        <Text style={styles.textTime}>{StringUtil.formatTime(this.state.position)}</Text>
+        <SeekBar style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
+          progressHeight={2}
+          progress={this.state.position}
+          min={0}
+          max={this.state.duration}
+          progressBackgroundColor='#663300'
+          progressColor='#ff6633'
+          thumbColor={Colors.colorPrimary}
+          thumbColorPressed='#ff6633'
+          onStartTouch={() => {
+            this.isPressed = true;
+          }}
+          onProgressChanged={(value) => {
+            console.log('onProgressChanged:' + value);
+            this.setState({
+              position: value
+            });
+          }}
+          onStopTouch={(position) => {
+            this.isPressed = false;
+            this.player.seek(position / 1000)
+          }}
+        />
+
+        <Text style={styles.textTime}>{StringUtil.formatTime(this.state.duration)}</Text>
+      </View>);
+  }
+
   _renderControllerBar() {
     return (
       <View style={styles.controllerBar}>
@@ -109,35 +141,7 @@ export default class MusicPlayer extends Component {
 
           <LyricComonent song={song} position={this.state.position} />
 
-          <View style={styles.progressBar}>
-            <Text style={styles.textTime}>{StringUtil.formatTime(this.state.position)}</Text>
-            <SeekBar style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
-              progressHeight={2}
-              //onChanged={(progress) => this.props.onChanged(progress)}
-              progress={this.state.position}
-              min={0}
-              max={this.state.duration}
-              progressBackgroundColor='#663300'
-              progressColor='#ff6633'
-              thumbColor={Colors.colorPrimary}
-              thumbColorPressed='#ff6633'
-              onStartTouch={()=>{
-                this.isPressed = true;
-              }}
-              onProgressChanged={(value) => {
-                console.log('onProgressChanged:' + value);
-                this.setState({
-                  position: value
-                });
-              }}
-              onStopTouch={(position)=>{
-                this.isPressed = false;
-                this.player.seek(position / 1000)
-              }}
-            />
-
-            <Text style={styles.textTime}>{StringUtil.formatTime(this.state.duration)}</Text>
-          </View>
+          {this._renderProgressBar()}
 
           {/* <PlayerProgressBar
             style={{ margin: 20 }}

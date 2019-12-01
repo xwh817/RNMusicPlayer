@@ -62,4 +62,10 @@ export default class MusicApi {
       .then(data => data['lrc']['lyric']);
   }
 
+
+  static getMVUrl(id) {
+    return HttpUtil.get(this.URL_MV_DETAIL + id)
+      .then(data => data['data']['brs']['480']);
+  }
+
 }

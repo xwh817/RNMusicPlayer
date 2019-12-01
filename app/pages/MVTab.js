@@ -5,8 +5,6 @@ import MVItem from '../component/MVItem';
 import Toast from 'react-native-easy-toast';
 import Colors from '../values/Colors';
 
-var mount;
-
 export default class MVTab extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +12,7 @@ export default class MVTab extends Component {
       data: [],
       isLoading: true,
     };
+    this.mount = false;
   }
 
   _loadData() {
@@ -21,7 +20,7 @@ export default class MVTab extends Component {
 
     MusicApi.getMVList(this.props.url)
       .then(items => {
-        if (mount) {
+        if (this.mount) {
           this.setState({
             isLoading: false,
             data: items,
@@ -33,12 +32,12 @@ export default class MVTab extends Component {
 
   // 页面加载完成之后，获取数据。
   componentDidMount() {
-    mount = true;
+    this.mount = true;
     this._loadData();
   }
 
   componentWillUnmount() {
-    mount = false;
+    this.mount = false;
   }
 
   render() {
@@ -71,6 +70,6 @@ export default class MVTab extends Component {
   };
 
   _renderItem = ({ item }) => (
-    <MVItem item={item} onPress={this._onItemPress} />
+    <MVItem mv={item} onPress={this._onItemPress} />
   );
 }
