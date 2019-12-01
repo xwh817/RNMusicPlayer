@@ -42,6 +42,9 @@ export default class RotateAnimator extends Component {
   }
 
   pauseAnim() {
+    if (!this.animStarted) {
+      return; // 如果动画已经开始，就不要重复开始
+    }
     console.log('暂停动画');
     this.animStarted = false;
     this.state.animatedValue.stopAnimation(value => {

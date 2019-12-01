@@ -68,6 +68,7 @@ export default class SeekBar extends Component {
   }
 
   render() {
+    console.log("render: " + this.props.progress);
     let progressPosition= this.getPositionFromValue(this.props.progress);   // 当前进度的位置（界面位置）
     return (
       <View style={[this.styles.container, this.props.style]}
@@ -197,7 +198,7 @@ export default class SeekBar extends Component {
     }
 
 
-    console.log("updatePosition: " + position + ", value:"+ newValue);
+    //console.log("updatePosition: " + position + ", value:"+ newValue);
 
   }
 

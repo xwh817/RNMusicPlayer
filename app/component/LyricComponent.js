@@ -118,14 +118,22 @@ export default class LyricComonent extends Component {
     this._currentIndex = index;
 
     // 是否需要滚动(top和bottom到边界时不滚动了)
-    if (topIndex < 0 && this.currentY <= 0) {
-      return;
+    if (topIndex < 0) {
+      if (this.currentY <= 0) {
+        return;
+      }
+      topIndex = 0;
     }
-    if (bottomIndex >= itemSize &&
-      this.currentY >= (itemSize - visibleItemSize) * itemHeight) {
-      return;
+    if (bottomIndex >= itemSize) {
+      if (this.currentY >= (itemSize - visibleItemSize) * itemHeight) {
+        return;
+      }
+      topIndex = itemSize - offset;
     }
 
+
+
+    console.log("scrollToIndex: " + topIndex)
     this.flatList.scrollToIndex({ index: topIndex, animated: true });
   }
 
@@ -162,7 +170,7 @@ export default class LyricComonent extends Component {
 
   _renderItem = ({ item }) => (
     <Text numberOfLines={1} style={[styles.text,
-      { color: item.index == this._currentIndex ? Colors.colorPrimary : 'white' }]}>
+    { color: item.index == this._currentIndex ? Colors.colorLight : '#ffffff99' }]}>
       {item.content}
     </Text>
   );
@@ -185,7 +193,6 @@ const styles = StyleSheet.create({
   text: {
     height: itemHeight,
     fontSize: 12,
-    color: 'white',
     textAlign: 'center',
   }
 });

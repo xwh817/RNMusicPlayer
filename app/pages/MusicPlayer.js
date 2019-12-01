@@ -8,8 +8,9 @@ import ListTile from '../component/ListTile';
 import SongUtil from '../model/SongUtil'
 import { BlurView } from "@react-native-community/blur";
 import RotateAnimator from '../component/RotateAnimator'
-import PlayerProgressBar from '../component/PlayerProgressBar';
+import SeekBar from '../component/SeekBar';
 import LyricComonent from '../component/LyricComponent';
+import StringUtil from '../utils/StringUtil'
 
 export default class MusicPlayer extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class MusicPlayer extends Component {
       isPlaying: false,
       position: 0,
       duration: 0,
-    }
+    };
+    this.isPressed = false;
   }
 
   imageLoaded() {
@@ -43,17 +45,17 @@ export default class MusicPlayer extends Component {
 
   _renderControllerBar() {
     return (
-    <View style={styles.controllerBar}>
-      <Entypo name={'controller-jump-to-start'} size={40} color={'white'} onPress={()=>{}} />
-      <Entypo style={{marginLeft:20, marginRight:20}}
-        name={this.state.isPlaying ? 'controller-paus':'controller-play'} 
-        size={60} color={'white'} onPress={()=>{
-        this.setState({
-          isPlaying: !this.state.isPlaying
-        });
-      }} />
-      <Entypo name={'controller-next'} size={40} color={'white'} onPress={()=>{}} />
-    </View>);
+      <View style={styles.controllerBar}>
+        <Entypo name={'controller-jump-to-start'} size={40} color={'white'} onPress={() => { }} />
+        <Entypo style={{ marginLeft: 20, marginRight: 20 }}
+          name={this.state.isPlaying ? 'controller-paus' : 'controller-play'}
+          size={60} color={'white'} onPress={() => {
+            this.setState({
+              isPlaying: !this.state.isPlaying
+            });
+          }} />
+        <Entypo name={'controller-next'} size={40} color={'white'} onPress={() => { }} />
+      </View>);
   }
 
   render() {
@@ -84,7 +86,7 @@ export default class MusicPlayer extends Component {
 
           {this._renderBackground()}
 
-          <ListTile style={{marginBottom: 20}}
+          <ListTile style={{ marginBottom: 20 }}
             title={song.name}
             subTitle={SongUtil.getArtistNames(song)}
             onPress={() => this.props.navigation.pop()} />
@@ -105,13 +107,43 @@ export default class MusicPlayer extends Component {
             </RotateAnimator>
           </TouchableOpacity>
 
-          <LyricComonent song = {song} position={this.state.position} />
+          <LyricComonent song={song} position={this.state.position} />
 
-          <PlayerProgressBar
-            style={{margin:20}}
+          <View style={styles.progressBar}>
+            <Text style={styles.textTime}>{StringUtil.formatTime(this.state.position)}</Text>
+            <SeekBar style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
+              progressHeight={2}
+              //onChanged={(progress) => this.props.onChanged(progress)}
+              progress={this.state.position}
+              min={0}
+              max={this.state.duration}
+              progressBackgroundColor='#663300'
+              progressColor='#ff6633'
+              thumbColor={Colors.colorPrimary}
+              thumbColorPressed='#ff6633'
+              onStartTouch={()=>{
+                this.isPressed = true;
+              }}
+              onProgressChanged={(value) => {
+                console.log('onProgressChanged:' + value);
+                this.setState({
+                  position: value
+                });
+              }}
+              onStopTouch={(position)=>{
+                this.isPressed = false;
+                this.player.seek(position / 1000)
+              }}
+            />
+
+            <Text style={styles.textTime}>{StringUtil.formatTime(this.state.duration)}</Text>
+          </View>
+
+          {/* <PlayerProgressBar
+            style={{ margin: 20 }}
             position={this.state.position}
-            duration= {this.state.duration}
-          />
+            duration={this.state.duration}
+          /> */}
           {this._renderControllerBar()}
         </View>
       </SafeAreaView>);
@@ -151,12 +183,12 @@ export default class MusicPlayer extends Component {
     let currentTime = Math.round(this.state.position);
     let newTime = Math.round(progress * 1000);  // 单位：毫秒
     if (currentTime != newTime) {   // 用整数比较，减少刷新次数
-        this.setState({
-            position: newTime,
-        });
-        console.log("setCurrentTime: " + newTime);
+      this.setState({
+        position: newTime,
+      });
+      //console.log("setCurrentTime: " + newTime);
     }
-}
+  }
 
 
 }
@@ -191,6 +223,15 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 子元素沿主轴的对齐方式
     //marginTop: 16,
     marginBottom: 26,
+  },
+  progressBar: {
+    flexDirection: 'row',
+    alignItems: 'center', // 子元素沿主轴的对齐方式
+    margin: 20
+  },
+  textTime: {
+    fontSize: 12,
+    color: '#ffffff'
   }
 
 });
