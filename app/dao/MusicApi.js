@@ -57,4 +57,9 @@ export default class MusicApi {
   }
 
 
+  static getLyric(id) {
+    return HttpUtil.get(this.URL_GET_LYRIC + id)
+      .then(data => data['lrc']['lyric']);
+  }
+
 }

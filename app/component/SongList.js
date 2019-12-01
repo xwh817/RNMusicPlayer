@@ -3,7 +3,6 @@ import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import MusicApi from '../dao/MusicApi'
 import SongListItem from './SongListItem';
 
-var mount;
 const itemHeight = 70;  // 如果可以确定高度，免去了渲染计算高度
 
 export default class SongList extends Component {
@@ -13,6 +12,7 @@ export default class SongList extends Component {
                      data: [],
                      isLoading: true,
                    };
+                   this.mount = false;
                  }
 
                  loadData() {
@@ -20,7 +20,7 @@ export default class SongList extends Component {
 
                    MusicApi.getTopSongs(0)
                      .then(songs => {
-                       if (mount) {
+                       if (this.mount) {
                          this.setState({
                            isLoading: false,
                            data: songs,
@@ -32,12 +32,12 @@ export default class SongList extends Component {
 
                  // 页面加载完成之后，获取数据。
                  componentDidMount() {
-                   mount = true;
+                  this.mount = true;
                    this.loadData();
                  }
 
                  componentWillUnmount() {
-                   mount = false;
+                  this.mount = false;
                  }
 
                  render() {

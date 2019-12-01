@@ -6,7 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 export default class ListTile extends Component {
   render() {
     return (
-      <View style={styles.item}>
+      <View style={[styles.item, this.props.style]}>
         <AntDesign name={'arrowleft'} size={24}
           style={styles.icon} color={'white'}
           onPress={this.props.onPress} />

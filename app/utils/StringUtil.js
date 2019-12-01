@@ -1,5 +1,6 @@
 export default class StringUtil {
-    static formatTime(second) {
+    static formatTime(milliseconds) {
+        let second = milliseconds / 1000;
         let h = 0, m = 0, s = parseInt(second);
         if (s > 60) {
             m = parseInt(s / 60);
@@ -17,4 +18,6 @@ export default class StringUtil {
 
         return strTime;
     }
+
+
 }

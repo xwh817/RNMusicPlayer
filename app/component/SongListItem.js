@@ -20,7 +20,7 @@ export default class SongListItem extends React.PureComponent {
 
   render() {
     var item = this.props.item;
-    console.log('render item: ' + item.name);
+    //console.log('render item: ' + item.name);
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.item}>
