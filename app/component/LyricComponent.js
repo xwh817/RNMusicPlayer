@@ -12,9 +12,9 @@ export default class LyricComonent extends Component {
       lyric: null,
       isLoading: true,
       position: 0,
+      currentIndex: -1,
     };
     this.mount = false;
-    this._currentIndex = -1;
     this.currentY = 0;
   }
 
@@ -61,7 +61,7 @@ export default class LyricComonent extends Component {
   componentDidUpdate() {
     if (changed) {
       let index = this.getIndexByTime(this.state.position);
-      if (index != this._currentIndex) {
+      if (index != this.state.currentIndex) {
         this.scrollTo(index);
       }
       changed = false;
@@ -83,15 +83,15 @@ export default class LyricComonent extends Component {
     // 选取比较的范围，不用每次都从头遍历。
     let start;
     let end;
-    if (this._currentIndex <= 1 || this._currentIndex >= lyric.items.length) {
+    if (this.state.currentIndex <= 1 || this.state.currentIndex >= lyric.items.length) {
       start = 0;
       end = lyric.items.length;
-    } else if (milliseconds >= lyric.items[this._currentIndex - 1].position) {
-      start = this._currentIndex;
+    } else if (milliseconds >= lyric.items[this.state.currentIndex - 1].position) {
+      start = this.state.currentIndex;
       end = lyric.items.length;
     } else {
       start = 0;
-      end = this._currentIndex;
+      end = this.state.currentIndex;
     }
 
     let index = start;
@@ -115,7 +115,9 @@ export default class LyricComonent extends Component {
     let topIndex = index - offset; // 选中元素居中时,top的Index
     let bottomIndex = index + offset;
 
-    this._currentIndex = index;
+    this.setState({
+      currentIndex: index
+    });
 
     // 是否需要滚动(top和bottom到边界时不滚动了)
     if (topIndex < 0) {
@@ -130,8 +132,6 @@ export default class LyricComonent extends Component {
       }
       topIndex = itemSize - offset;
     }
-
-
 
     console.log("scrollToIndex: " + topIndex)
     this.flatList.scrollToIndex({ index: topIndex, animated: true });
@@ -170,7 +170,7 @@ export default class LyricComonent extends Component {
 
   _renderItem = ({ item }) => (
     <Text numberOfLines={1} style={[styles.text,
-    { color: item.index == this._currentIndex ? Colors.colorLight : '#ffffff99' }]}>
+    { color: item.index == this.state.currentIndex ? '#ffffff' : '#ffffff99' }]}>
       {item.content}
     </Text>
   );

@@ -15,6 +15,8 @@ import SongUtil from '../model/SongUtil';
 import Toast from 'react-native-easy-toast';
 import Colors from '../values/Colors';
 import MusicApi from '../dao/MusicApi';
+import StringUtil from '../utils/StringUtil';
+import SeekBar from '../component/SeekBar';
 
 export default class MVItem extends React.PureComponent {
   constructor(props) {
@@ -55,6 +57,7 @@ export default class MVItem extends React.PureComponent {
         if (this.mount) {
           this.setState({
             url: url,
+            isPlaying: true,
           });
         }
       })
@@ -74,7 +77,7 @@ export default class MVItem extends React.PureComponent {
 
   _renderMV(mv) {
     //console.log("MV url: " + this.state.url + ", isPlaying: " + this.state.isPlaying);
-    if (this.state.duration > 0) {
+    if (this.state.url != null) {
       return (<Video
         source={{ uri: this.state.url }}
         ref={(ref) => {
@@ -101,17 +104,14 @@ export default class MVItem extends React.PureComponent {
     return (
       <View style={styles.progressBar}>
         <Text style={styles.textTime}>{StringUtil.formatTime(this.state.position)}</Text>
-        <SeekBar style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
+        <SeekBar style={{ flex: 1, marginLeft: 12, marginRight: 12 }}
           progressHeight={2}
           progress={this.state.position}
           min={0}
           max={this.state.duration}
-          progressBackgroundColor='#663300'
-          progressColor='#ff6633'
-          thumbColor={Colors.colorPrimary}
-          thumbColorPressed='#ff6633'
           onStartTouch={() => {
             this.isPressed = true;
+            this.props.onChildScroll(true);
           }}
           onProgressChanged={(value) => {
             console.log('onProgressChanged:' + value);
@@ -121,7 +121,8 @@ export default class MVItem extends React.PureComponent {
           }}
           onStopTouch={(position) => {
             this.isPressed = false;
-            this.player.seek(position / 1000)
+            this.player.seek(position / 1000);
+            this.props.onChildScroll(false);
           }}
         />
 
@@ -164,11 +165,9 @@ export default class MVItem extends React.PureComponent {
   render() {
     var mv = this.props.mv;
     return (
-      <View style={styles.mv} roundAsCircle={true}>
-
+      <View style={styles.item} roundAsCircle={true}>
         {this._renderMV(mv)}
         {this._renderPlayerIcon()}
-        {this.state.duration > 0 && this._renderProgressBar()}
 
         <Text style={styles.itemTitle} numberOfLines={1}>
           {mv['name']}
@@ -177,20 +176,22 @@ export default class MVItem extends React.PureComponent {
           {SongUtil.getArtistNames(mv)}
         </Text>
 
-        <TouchableNativeFeedback onPress={() => {
-          if (this.state.url == null) {
-            this._loadData();
-          } else if(!this.state.showPlayerIcon){
-            this.setState({
-              showPlayerIcon: true,
-            });
-          } else {
+        <TouchableNativeFeedback
+          onPress={() => {
             this.autoHidePlayerIcon();
-            this.setState({
-              isPlaying: !this.state.isPlaying
-            });
-          }
-        }}>
+            
+            if (this.state.url == null) {
+              this._loadData();
+            } else if (!this.state.showPlayerIcon) {
+              this.setState({
+                showPlayerIcon: true,
+              });
+            } else {
+              this.setState({
+                isPlaying: !this.state.isPlaying,
+              });
+            }
+          }}>
           <View
             style={{
               position: 'absolute',
@@ -202,14 +203,18 @@ export default class MVItem extends React.PureComponent {
           />
         </TouchableNativeFeedback>
 
+        {/*进度条放在背景点击的上面，不然事件被挡住了 */}
+        {this.state.duration > 0 && this._renderProgressBar()}
 
-        <Toast ref={toast => { this.toast = toast }}
-          position='center'
-          style={{ backgroundColor: Colors.colorPrimary }}
+        <Toast
+          ref={toast => {
+            this.toast = toast;
+          }}
+          position="center"
+          style={{backgroundColor: Colors.colorPrimary}}
         />
 
         {this.state.isLoading && this._showLoading()}
-
       </View>
     );
   };
@@ -226,7 +231,6 @@ export default class MVItem extends React.PureComponent {
     this.setState({ 
       duration: data.duration * 1000,
       isLoading: false,
-      isPlaying: true,
     });
     console.log("onLoad: " + data.duration);
   };
@@ -247,19 +251,20 @@ export default class MVItem extends React.PureComponent {
   };
 
   setCurrentTime(progress) {
-    let currentTime = Math.round(this.state.position);
-    let newTime = Math.round(progress * 1000);  // 单位：毫秒
-    if (currentTime != newTime) {   // 用整数比较，减少刷新次数
+    let currentTime = Math.round(this.state.position / 1000);
+    let newTime = Math.round(progress);  // 单位：秒
+    if (currentTime != newTime) {   // 用秒比较，减少刷新次数
       this.setState({
-        position: newTime,
+        position: newTime * 1000,
       });
-      //console.log("setCurrentTime: " + newTime);
+      console.log("setCurrentTime: " + newTime);
     }
   }
 }
 
 const screen = Dimensions.get('window');
 const itemWidth = screen.width - Dimens.pagePadding * 2;
+var itemPadding = Dimens.pagePadding;
 var imageHeight = itemWidth * 9 / 16;
 
 const styles = StyleSheet.create({
@@ -267,16 +272,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#eeeeee',
-    marginLeft: Dimens.pagePadding,
-    marginRight: Dimens.pagePadding,
-    marginTop: Dimens.pagePadding,
-    marginBottom: Dimens.pagePadding,
+    margin: itemPadding,
     overflow: 'hidden', // 切掉多余部分
     borderColor: 'white',
     borderWidth: 0, // 边框宽度为0 + hidden，相当于切成圆角。
     borderRadius: 4, // 圆角
     shadowColor: 'grey', // 添加阴影效果
-    shadowOffset: { width: 1, height: 1 },
+    shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4, // android端要加上这个属性，不然阴影不出来
@@ -295,14 +297,16 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   progressBar: {
+    //height: progressHeight,
+    //backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center', // 子元素沿主轴的对齐方式
-    margin: 20,
+    padding: 10,
     position: 'absolute',
-    bottom: (imageHeight - 30)
+    top: imageHeight - 30 - itemPadding,
   },
   textTime: {
     fontSize: 12,
-    color: '#ffffff'
-  }
+    color: '#ffffff',
+  },
 });

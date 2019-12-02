@@ -20,18 +20,21 @@ export default class RotateAnimator extends Component {
     }
     this.animStarted = true;
     if (this.animator == undefined) {
-      let duration = 16000;
+      let duration = 24000;
       if (this.props.duration) {
         duration = this.props.duration;
       }
 
-      this.animator = Animated.timing(     // 随时间变化而执行动画
-        this.state.animatedValue,          // 动画中的变量值
+      // 注意useNativeDriver实现动画流畅，打开Perf Monitor,查看界面的fps，动画时 js:低于30，UI:60
+      this.animator = Animated.timing(
+        // 随时间变化而执行动画
+        this.state.animatedValue, // 动画中的变量值
         {
           toValue: 360,
-          duration: duration,              // 让动画持续一段时间
-          easing: Easing.linear,    // 匀速
-        }
+          duration: duration, // 让动画持续一段时间
+          easing: Easing.linear, // 匀速
+          useNativeDriver: true,  // 使用原生驱动，动画的刷新交给native端，js端fps低，会造成动画不流畅。
+        },
       );
       // 循环执行
       this.animator = Animated.loop(this.animator, { iterations: -1 });

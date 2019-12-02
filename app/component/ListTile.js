@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Colors from '../values/Colors';
 
 export default class ListTile extends Component {
   render() {
     return (
       <View style={[styles.item, this.props.style]}>
-        <AntDesign name={'arrowleft'} size={24}
-          style={styles.icon} color={'white'}
-          onPress={this.props.onPress} />
+        <AntDesign
+          name={'arrowleft'}
+          size={24}
+          style={styles.icon}
+          color={'white'}
+          onPress={this.props.onPress}
+        />
         <View style={styles.layoutText}>
           <Text style={styles.itemTitle} numberOfLines={1}>
             {this.props.title}
@@ -18,7 +23,7 @@ export default class ListTile extends Component {
             {this.props.subTitle}
           </Text>
         </View>
-        <Entypo name={'heart'} size={24} style={styles.icon} color={'pink'} />
+        <Entypo name={'heart'} size={24} style={styles.icon} color={Colors.colorGrey} />
       </View>
     );
   }

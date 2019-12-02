@@ -21,7 +21,17 @@ export default class MV extends Component {
 
     this.areas = ['内地', '港台', '欧美', '日本', '韩国'];
 
+    this.state = {
+      locked: false,
+    };
+
   }
+
+  onChildScroll = (isScrolling) => {
+    this.setState({
+      locked: isScrolling
+    });
+  };
 
   render() {
     return (
@@ -32,14 +42,24 @@ export default class MV extends Component {
         tabBarActiveTextColor={Colors.colorPrimary}
         tabBarInactiveTextColor="#999999"
         tabBarTextStyle={styles.tabBarText}
-        tabBarUnderlineStyle={styles.tabBarUnderline}>
-        {
-          Object.keys(this.types).map(key => (
-            <MVTab url={this.types[key]} key={key} tabLabel={key} />))
-        }
-        {
-          this.areas.map(item => <MVTab url={MusicApi.URL_MV_AREA + item} key={item} tabLabel={item} />)
-        }
+        tabBarUnderlineStyle={styles.tabBarUnderline}
+        locked={this.state.locked}>
+        {Object.keys(this.types).map(key => (
+          <MVTab
+            url={this.types[key]}
+            key={key}
+            tabLabel={key}
+            onChildScroll={this.onChildScroll}
+          />
+        ))}
+        {this.areas.map(item => (
+          <MVTab
+            url={MusicApi.URL_MV_AREA + item}
+            key={item}
+            tabLabel={item}
+            onChildScroll={this.onChildScroll}
+          />
+        ))}
       </ScrollableTabView>
     );
   }

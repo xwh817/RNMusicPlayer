@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
+import Colors from '../values/Colors'
 
 var valueChanged = false;
 
@@ -7,15 +8,14 @@ export default class SeekBar extends Component {
   containerLeft = 0;
   progressLeft = 0;
   progressRight = 0;
-
   // 默认props
   static defaultProps = {
     progressHeight: 4,
-    progressBackgroundColor: '#666666',
-    progressColor: '#cccccc',
+    progressBackgroundColor: Colors.colorGrey,
+    progressColor: '#ff6633',
     thumbSize: 12,      // thumbSize为0则进度条不可拖动
-    thumbColor: '#dddddd',
-    thumbColorPressed: '#eeeeee',
+    thumbColor: Colors.colorPrimary,
+    thumbColorPressed: '#ff6633',
     min: 0,
     max: 100,
     progress: 0,    // 初始值
@@ -68,7 +68,7 @@ export default class SeekBar extends Component {
   }
 
   render() {
-    console.log("render: " + this.props.progress);
+    //console.log("render: " + this.props.progress);
     let progressPosition= this.getPositionFromValue(this.props.progress);   // 当前进度的位置（界面位置）
     return (
       <View style={[this.styles.container, this.props.style]}
