@@ -2,6 +2,7 @@ class Lyric {
   constructor(str) {
     this.lyric = str;
     this.items = [];
+    this.build();
   }
   build() {
     if (this.lyric == null || this.lyric.length == 0) {
