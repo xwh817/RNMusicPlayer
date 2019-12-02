@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import Video from 'react-native-video';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,7 +17,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Colors from '../values/Colors';
 import MusicHeader from '../component/MusicHeader';
 import SongUtil from '../model/SongUtil';
-import {BlurView} from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 import RotateAnimator from '../component/RotateAnimator';
 import SeekBar from '../component/SeekBar';
 import LyricComonent from '../component/LyricComponent';
@@ -38,7 +39,7 @@ export default class MusicPlayer extends Component {
   imageLoaded() {
     console.log('imageLoaded ' + this.state.song.name);
     setTimeout(() => {
-      this.setState({viewRef: findNodeHandle(this.backgroundImage)});
+      this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
     }, 200);
   }
 
@@ -55,6 +56,16 @@ export default class MusicPlayer extends Component {
     }
   }
 
+  _renderLoading() {
+    if (this.state.duration < 10) {
+      return (
+        <ActivityIndicator
+          size={60}
+          color={Colors.colorLight}
+          animating={true} />);
+    }
+  }
+
   _renderProgressBar() {
     return (
       <View style={styles.progressBar}>
@@ -62,7 +73,7 @@ export default class MusicPlayer extends Component {
           {StringUtil.formatTime(this.state.position)}
         </Text>
         <SeekBar
-          style={{flex: 1, marginLeft: 20, marginRight: 20}}
+          style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
           progressHeight={2}
           progress={this.state.position}
           min={0}
@@ -97,10 +108,10 @@ export default class MusicPlayer extends Component {
           name={'controller-jump-to-start'}
           size={40}
           color={iconColor}
-          onPress={() => {}}
+          onPress={() => { }}
         />
         <Entypo
-          style={{marginLeft: 20, marginRight: 20}}
+          style={{ marginLeft: 20, marginRight: 20 }}
           name={this.state.isPlaying ? 'controller-paus' : 'controller-play'}
           size={60}
           color={iconColor}
@@ -114,7 +125,7 @@ export default class MusicPlayer extends Component {
           name={'controller-next'}
           size={40}
           color={iconColor}
-          onPress={() => {}}
+          onPress={() => { }}
         />
       </View>
     );
@@ -133,12 +144,12 @@ export default class MusicPlayer extends Component {
           ref={img => {
             this.backgroundImage = img;
           }}
-          source={{uri: SongUtil.getSongImage(song, imageSize)}}
+          source={{ uri: SongUtil.getSongImage(song, imageSize) }}
           style={this.state.viewRef == null ? styles.hidden : styles.absolute}
           onLoadEnd={this.imageLoaded.bind(this)}
         />
         <Video
-          source={{uri: SongUtil.getSongUrl(song)}} // Can be a URL or a local file.
+          source={{ uri: SongUtil.getSongUrl(song) }} // Can be a URL or a local file.
           ref={ref => {
             this.player = ref;
           }}
@@ -152,9 +163,9 @@ export default class MusicPlayer extends Component {
         />
         {this._renderBackground()}
 
-        <SafeAreaView style={styles.content} forceInset={{top: 'always'}}>
+        <SafeAreaView style={styles.content} forceInset={{ top: 'always' }}>
           <MusicHeader
-            style={{marginBottom: 26}}
+            style={{ marginBottom: 26 }}
             song={song}
             onPress={() => this.props.navigation.pop()}
           />
@@ -170,14 +181,17 @@ export default class MusicPlayer extends Component {
             <RotateAnimator duration={24000} running={this.state.isPlaying}>
               <Image
                 roundAsCircle={true}
-                source={{uri: SongUtil.getSongImage(song, imageSize)}}
+                source={{ uri: SongUtil.getSongImage(song, imageSize) }}
                 style={styles.coverImage}
               />
+              <View style={[styles.absolute, {justifyContent:'center'}]}>
+                {this._renderLoading()}
+              </View>
             </RotateAnimator>
           </TouchableOpacity>
 
           <LyricComonent song={song} position={this.state.position} />
-
+          
           {this._renderProgressBar()}
 
           {/* <PlayerProgressBar
@@ -217,7 +231,7 @@ export default class MusicPlayer extends Component {
   };
 
   onEnd = () => {
-    this.setState({paused: true});
+    this.setState({ paused: true });
     this.player.seek(0);
     console.log('onEnd');
   };

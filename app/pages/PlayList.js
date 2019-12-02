@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   },
   tabBarText: {
     fontSize: 12,
-    marginTop: 12,
+    marginTop: 8,
+    marginBottom: 4,
   },
   tabBarUnderline: {
     backgroundColor: Colors.colorPrimary,

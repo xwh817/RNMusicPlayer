@@ -39,7 +39,7 @@ export default class MusicHeader extends Component {
           </Text>
         </View>
         <Entypo name={'heart'} size={24} style={styles.icon}
-          color={this.state.favorited ? Colors.colorPrimary : Colors.colorGrey}
+          color={this.state.favorited ? Colors.colorPrimary : '#ffffff99'}
           onPress={() => {
             this.state.favorited ? this._removeFav() : this._addFav()
           }} />

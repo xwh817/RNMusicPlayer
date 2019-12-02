@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
 import SongListItem from './SongListItem';
+import Colors from '../values/Colors';
 
 const itemHeight = 70; // 如果可以确定高度，免去了渲染计算高度
 
@@ -9,7 +10,7 @@ export default class SongList extends Component {
     if (this.props.songs == null) {
       return (
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator size={46} color={'green'} animating={true} />
+          <ActivityIndicator size={46} color={Colors.colorLight} animating={true} />
         </View>
       );
     }
