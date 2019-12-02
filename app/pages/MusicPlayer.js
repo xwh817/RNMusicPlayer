@@ -14,7 +14,7 @@ import Video from 'react-native-video';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Colors from '../values/Colors';
-import ListTile from '../component/ListTile';
+import MusicHeader from '../component/MusicHeader';
 import SongUtil from '../model/SongUtil';
 import {BlurView} from '@react-native-community/blur';
 import RotateAnimator from '../component/RotateAnimator';
@@ -153,10 +153,9 @@ export default class MusicPlayer extends Component {
         {this._renderBackground()}
 
         <SafeAreaView style={styles.content} forceInset={{top: 'always'}}>
-          <ListTile
+          <MusicHeader
             style={{marginBottom: 26}}
-            title={song.name}
-            subTitle={SongUtil.getArtistNames(song)}
+            song={song}
             onPress={() => this.props.navigation.pop()}
           />
 

@@ -148,12 +148,12 @@ export default class LyricComonent extends Component {
       topIndex = itemSize - offset;
     }
 
-    console.log('scrollToIndex: ' + topIndex);
+    //console.log('scrollToIndex: ' + topIndex);
     this.flatList.scrollToIndex({index: topIndex, animated: true});
   }
 
   _renderLyric() {
-    console.log('lyric: ' + this.state.lyric);
+    //console.log('lyric: ' + this.state.lyric);
     if (this.state.lyric === undefined) {
       return <Text style={styles.text}>歌词加载中...</Text>;
     } else if (this.state.lyric === '') {

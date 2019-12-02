@@ -42,6 +42,8 @@ target 'RNMusicPlayer' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'RNMusicPlayerTests' do
     inherit! :search_paths
     # Pods for testing
