@@ -154,7 +154,7 @@ export default class MusicPlayer extends Component {
 
         <SafeAreaView style={styles.content} forceInset={{top: 'always'}}>
           <ListTile
-            style={{marginBottom: 20}}
+            style={{marginBottom: 26}}
             title={song.name}
             subTitle={SongUtil.getArtistNames(song)}
             onPress={() => this.props.navigation.pop()}

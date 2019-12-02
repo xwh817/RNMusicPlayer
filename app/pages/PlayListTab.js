@@ -4,6 +4,7 @@ import MusicApi from '../dao/MusicApi';
 import PlayListItem from '../component/PlayListItem';
 import Toast from 'react-native-easy-toast';
 import Colors from '../values/Colors';
+import PlayListDetail from '../pages/PlayListDetail';
 
 var mount;
 
@@ -65,8 +66,9 @@ export default class PlayListTab extends Component {
   }
 
   _onItemPress = item => {
-    console.log('_onItemPressed: ' + item.name);
-    this.toast.show(item.name);
+    console.log('_onItemPressed: ' + item.id);
+    //this.toast.show(item.name);
+    this.props.navigation.navigate('PlayListDetail', {playList: item});
   };
 
   _renderItem = ({ item }) => (

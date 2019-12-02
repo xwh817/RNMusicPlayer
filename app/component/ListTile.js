@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   itemTitle: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#ffffff'
   },
   itemSubTitle: {
-    fontSize: 12,
-    color: '#dddddd',
+    fontSize: 13,
+    color: '#dddddddd',
     marginTop: 2,
   },
 });

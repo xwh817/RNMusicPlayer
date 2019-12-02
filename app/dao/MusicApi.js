@@ -1,7 +1,6 @@
 import HttpUtil from '../utils/HttpUtil';
 
 export default class MusicApi {
-
   static URL_ROOT = 'http://music.turingmao.com';
   static URL_PLAY_LIST = `${this.URL_ROOT}/top/playlist?cat=`;
   static URL_PLAY_LIST_DETAIL = `${this.URL_ROOT}/playlist/detail?id=`;
@@ -19,53 +18,56 @@ export default class MusicApi {
 
   static URL_SEARCH = `${this.URL_ROOT}/search?keywords=`;
 
-  static URL_GET_TOPLIST =
-    `${this.URL_ROOT}/toplist/detail`; // 获取排行和摘要，或者/toplist
+  static URL_GET_TOPLIST = `${this.URL_ROOT}/toplist/detail`; // 获取排行和摘要，或者/toplist
 
   static URL_TOP_ARTISTS = `${this.URL_ROOT}/toplist/artist`;
   static URL_ARTIST_DETAIL = `${this.URL_ROOT}/artists?id=`;
 
-
   static getPlayList(cat) {
-    return HttpUtil.get(this.URL_PLAY_LIST + cat)
-      .then(data => data['playlists']);
+    return HttpUtil.get(this.URL_PLAY_LIST + cat).then(
+      data => data['playlists'],
+    );
+  }
+  static getPlayListDetail(id) {
+    return HttpUtil.get(this.URL_PLAY_LIST_DETAIL + id).then(
+      data => data['playlist']['tracks'],
+    );
   }
 
   static getTopSongs(listId) {
-    return HttpUtil.get(this.URL_TOP_SONGS + listId)
-      .then(data => data['playlist']['tracks']);
+    return HttpUtil.get(this.URL_TOP_SONGS + listId).then(
+      data => data['playlist']['tracks'],
+    );
   }
 
   static getMVList(url) {
-    return HttpUtil.get(url)
-      .then(data => {
-        if (url == this.URL_MV_PERSONAL) {
-          return data.map(item => this._convertMV(item));
-        } else {
-          return data['data'];
-        }
-      });
+    return HttpUtil.get(url).then(data => {
+      if (url == this.URL_MV_PERSONAL) {
+        return data.map(item => this._convertMV(item));
+      } else {
+        return data['data'];
+      }
+    });
   }
 
-  static _convertMV(item){
+  static _convertMV(item) {
     return {
-      id: item['id'], 
-      name: item['name'], 
+      id: item['id'],
+      name: item['name'],
       cover: item['picUrl'],
-      artistNames: item['artistName']
+      artistNames: item['artistName'],
     };
   }
 
-
   static getLyric(id) {
-    return HttpUtil.get(this.URL_GET_LYRIC + id)
-      .then(data => data['lrc']['lyric']);
+    return HttpUtil.get(this.URL_GET_LYRIC + id).then(
+      data => data['lrc']['lyric'],
+    );
   }
-
 
   static getMVUrl(id) {
-    return HttpUtil.get(this.URL_MV_DETAIL + id)
-      .then(data => data['data']['brs']['480']);
+    return HttpUtil.get(this.URL_MV_DETAIL + id).then(
+      data => data['data']['brs']['480'],
+    );
   }
-
 }
