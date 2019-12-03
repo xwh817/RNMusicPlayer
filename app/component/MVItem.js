@@ -23,16 +23,14 @@ export default class MVItem extends React.PureComponent {
     super(props);
     this.state = {
       isPlaying: false,
-      mv: this.props.mv,
       isLoading: false,
       url: null,
       showPlayerIcon: true,
       duration: 0,
       position: 0,
-    }
+    };
     this.mount = false;
   }
-
 
   // 页面加载完成之后，获取数据。
   componentDidMount() {
@@ -40,6 +38,7 @@ export default class MVItem extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    console.log('MV componentWillUnmount: ' + this.props.mv.name);
     this.mount = false;
     //this.player.stop();
     this.setState({
@@ -51,8 +50,8 @@ export default class MVItem extends React.PureComponent {
 
 
   _loadData() {
-    this.setState({ isLoading: true });
-    MusicApi.getMVUrl(this.state.mv.id)
+    this.setState({isLoading: true});
+    MusicApi.getMVUrl(this.props.mv.id)
       .then(url => {
         if (this.mount) {
           this.setState({
@@ -61,50 +60,67 @@ export default class MVItem extends React.PureComponent {
           });
         }
       })
-      .catch(error => this.toast.show("网络请求失败"));
+      .catch(error => this.toast.show('网络请求失败'));
   }
 
   _showLoading() {
     let size = 46;
     return (
-      <ActivityIndicator style={{
-        position: 'absolute',
-        left: (screen.width - size) / 2,
-        top: (imageHeight - size) / 2
-      }}
-        size={size} color={'green'} animating={true} />);
+      <ActivityIndicator
+        style={{
+          position: 'absolute',
+          left: (screen.width - size) / 2,
+          top: (imageHeight - size) / 2,
+        }}
+        size={size}
+        color={'green'}
+        animating={true}
+      />
+    );
   }
 
   _renderMV(mv) {
-    //console.log("MV url: " + this.state.url + ", isPlaying: " + this.state.isPlaying);
+    console.log(
+      'MV render: ' + mv.name + ', isPlaying: ' + this.state.isPlaying,
+    );
     if (this.state.url != null) {
-      return (<Video
-        source={{ uri: this.state.url }}
-        ref={(ref) => {
-          this.player = ref
-        }}
-        style={{ width: itemWidth, height: imageHeight, backgroundColor:'black'}}
-        onError={this.onError}
-        paused={!this.state.isPlaying}
-        onLoad={this.onLoad}
-        onProgress={this.onProgress}
-        onEnd={this.onEnd}
-        repeat={false}
-      />);
+      return (
+        <Video
+          source={{uri: this.state.url}}
+          ref={ref => {
+            this.player = ref;
+          }}
+          style={{
+            width: itemWidth,
+            height: imageHeight,
+            backgroundColor: 'black',
+          }}
+          onError={this.onError}
+          paused={!this.state.isPlaying}
+          onLoad={this.onLoad}
+          onProgress={this.onProgress}
+          onEnd={this.onEnd}
+          repeat={false}
+        />
+      );
     } else {
-      return (<Image
-        source={{ uri: `${mv['cover']}?param=640y360` }}
-        style={{ width: itemWidth, height: imageHeight }}
-      />);
+      return (
+        <Image
+          source={{uri: `${mv['cover']}?param=640y360`}}
+          style={{width: itemWidth, height: imageHeight}}
+        />
+      );
     }
   }
-
 
   _renderProgressBar() {
     return (
       <View style={styles.progressBar}>
-        <Text style={styles.textTime}>{StringUtil.formatTime(this.state.position)}</Text>
-        <SeekBar style={{ flex: 1, marginLeft: 12, marginRight: 12 }}
+        <Text style={styles.textTime}>
+          {StringUtil.formatTime(this.state.position)}
+        </Text>
+        <SeekBar
+          style={{flex: 1, marginLeft: 12, marginRight: 12}}
           progressHeight={2}
           progress={this.state.position}
           min={0}
@@ -113,41 +129,51 @@ export default class MVItem extends React.PureComponent {
             this.isPressed = true;
             this.props.onChildScroll(true);
           }}
-          onProgressChanged={(value) => {
+          onProgressChanged={value => {
             console.log('onProgressChanged:' + value);
             this.setState({
-              position: value
+              position: value,
             });
           }}
-          onStopTouch={(position) => {
-            this.isPressed = false;
+          onStopTouch={position => {
+            setTimeout(() => {
+              // 延迟修改状态，解决拖了之后跳一下的问题
+              this.isPressed = false;
+            }, 200);
             this.player.seek(position / 1000);
             this.props.onChildScroll(false);
           }}
         />
 
-        <Text style={styles.textTime}>{StringUtil.formatTime(this.state.duration)}</Text>
-      </View>);
+        <Text style={styles.textTime}>
+          {StringUtil.formatTime(this.state.duration)}
+        </Text>
+      </View>
+    );
   }
 
-
   _renderPlayerIcon() {
-    if (!this.state.showPlayerIcon || this.state.isLoading ) {
+    if (!this.state.showPlayerIcon || this.state.isLoading) {
       return;
     }
     let iconSize = 60;
     return (
-      <Entypo style={{
-        position: 'absolute',
-        left: (screen.width - iconSize) / 2,
-        top: (imageHeight - iconSize) / 2
-      }}
+      <Entypo
+        style={{
+          position: 'absolute',
+          left: (screen.width - iconSize) / 2,
+          top: (imageHeight - iconSize) / 2,
+        }}
         name={this.state.isPlaying ? 'controller-paus' : 'controller-play'}
-        size={iconSize} color={'#ffffffaa'} onPress={() => {
+        size={iconSize}
+        color={'#ffffffaa'}
+        onPress={() => {
           this.setState({
-            isPlaying: !this.state.isPlaying
+            isPlaying: !this.state.isPlaying,
           });
-        }} />);
+        }}
+      />
+    );
   }
 
   autoHidePlayerIcon() {
@@ -156,9 +182,9 @@ export default class MVItem extends React.PureComponent {
     }
     this.timer = setTimeout(() => {
       this.timer = undefined;
-      this.setState({ 
+      this.setState({
         showPlayerIcon: false,
-       });
+      });
     }, 4000);
   }
 
@@ -179,7 +205,7 @@ export default class MVItem extends React.PureComponent {
         <TouchableNativeFeedback
           onPress={() => {
             this.autoHidePlayerIcon();
-            
+
             if (this.state.url == null) {
               this._loadData();
             } else if (!this.state.showPlayerIcon) {
@@ -217,25 +243,25 @@ export default class MVItem extends React.PureComponent {
         {this.state.isLoading && this._showLoading()}
       </View>
     );
-  };
+  }
 
   onBuffer() {
-    console.log("onBuffer");
+    console.log('onBuffer');
   }
 
   onError() {
-    console.log("onError");
+    console.log('onError');
   }
 
-  onLoad = (data) => {
-    this.setState({ 
+  onLoad = data => {
+    this.setState({
       duration: data.duration * 1000,
       isLoading: false,
     });
-    console.log("onLoad: " + data.duration);
+    console.log('onLoad: ' + data.duration);
   };
 
-  onProgress = (data) => {
+  onProgress = data => {
     if (!this.isPressed) {
       // 尽量不要自己去更新DOM
       //this.refs.seekBar.setProgress(Math.round(data.currentTime));
@@ -245,19 +271,20 @@ export default class MVItem extends React.PureComponent {
   };
 
   onEnd = () => {
-    this.setState({ paused: true })
-    this.player.seek(0)
-    console.log("onEnd");
+    this.setState({paused: true});
+    this.player.seek(0);
+    console.log('onEnd');
   };
 
   setCurrentTime(progress) {
     let currentTime = Math.round(this.state.position / 1000);
-    let newTime = Math.round(progress);  // 单位：秒
-    if (currentTime != newTime) {   // 用秒比较，减少刷新次数
+    let newTime = Math.round(progress); // 单位：秒
+    if (currentTime != newTime) {
+      // 用秒比较，减少刷新次数
       this.setState({
         position: newTime * 1000,
       });
-      console.log("setCurrentTime: " + newTime);
+      console.log('setCurrentTime: ' + newTime);
     }
   }
 }
@@ -265,7 +292,7 @@ export default class MVItem extends React.PureComponent {
 const screen = Dimensions.get('window');
 const itemWidth = screen.width - Dimens.pagePadding * 2;
 var itemPadding = Dimens.pagePadding;
-var imageHeight = itemWidth * 9 / 16;
+var imageHeight = (itemWidth * 9) / 16;
 
 const styles = StyleSheet.create({
   item: {

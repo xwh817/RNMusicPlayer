@@ -52,6 +52,9 @@ export default class MVTab extends Component {
             data={this.state.data}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index.toString()}
+            onEndReached={this.loadMore}
+            viewabilityConfig={VIEWABILITY_CONFIG}
+            onViewableItemsChanged={this._onViewableItemsChanged}
           />
         )}
         <Toast
@@ -77,4 +80,17 @@ export default class MVTab extends Component {
       onChildScroll={this.props.onChildScroll}
     />
   );
+
+  //列表滚动变化事件
+  _onViewableItemsChanged = changed => {
+    //console.log(changed);
+  };
+
 }
+
+//列表滚动变化监听配置
+const VIEWABILITY_CONFIG = {
+  minimumViewTime: 300,
+  viewAreaCoveragePercentThreshold: 10,
+  waitForInteraction: true,
+};

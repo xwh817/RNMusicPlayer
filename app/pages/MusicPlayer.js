@@ -59,10 +59,14 @@ export default class MusicPlayer extends Component {
   _renderLoading() {
     if (this.state.duration < 10) {
       return (
-        <ActivityIndicator
-          size={60}
-          color={Colors.colorLight}
-          animating={true} />);
+        <View style={[styles.absolute, {justifyContent: 'center'}]}>
+          <ActivityIndicator
+            size={'large'}
+            color={Colors.colorLight}
+            animating={true}
+          />
+        </View>
+      );
     }
   }
 
@@ -184,9 +188,8 @@ export default class MusicPlayer extends Component {
                 source={{ uri: SongUtil.getSongImage(song, imageSize) }}
                 style={styles.coverImage}
               />
-              <View style={[styles.absolute, {justifyContent:'center'}]}>
-                {this._renderLoading()}
-              </View>
+              
+              {this._renderLoading()}
             </RotateAnimator>
           </TouchableOpacity>
 

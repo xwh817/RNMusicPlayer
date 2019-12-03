@@ -57,3 +57,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+
+# 不要同步package-lock.json，Github上报一些包过时的警告。
+package-lock.json
