@@ -4,6 +4,7 @@ import SongList from '../component/SongList';
 import MusicApi from '../dao/MusicApi';
 
 export default class PlayListDetail extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {

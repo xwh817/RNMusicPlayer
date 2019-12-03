@@ -1,13 +1,12 @@
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import React from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Recommend from '../pages/Recommend';
 import PlayList from '../pages/PlayList';
 import MV from '../pages/MV';
 import Favorite from '../pages/Favorite';
+import Colors from '../values/Colors';
 
 const iconSize = 30;
 /**
@@ -39,6 +38,12 @@ const BottomTabNavigator = createBottomTabNavigator(
         ),
       }),
     },
+    /* Center:{
+      screen: MV,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: ' ',
+      }),
+    }, */
     MV: {
       screen: MV,
       navigationOptions: ({navigation}) => ({
@@ -60,13 +65,14 @@ const BottomTabNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: 'Recommend', // 设置默认的页面组件
-    initialRouteParams: {title: 'Home'}, // 找这条命令不容易, 翻github翻了一个小时
+    //initialRouteParams: {title: 'Home'}, // 找这条命令不容易, 翻github翻了一个小时
 
     lazy: true, // 在app打开的时候将底部标签栏全部加载，默认false, 推荐改成true
     backBehavior: null, // 点击返回退到上级界面
 
     tabBarOptions: {
-      activeTintColor: 'tomato', // 选中的颜色
+      //activeTintColor: 'tomato', // 选中的颜色
+      activeTintColor: Colors.colorPrimary, // 选中的颜色
       inactiveTintColor: 'gray', // 未选中的颜色
 
       showLabel: true,

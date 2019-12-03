@@ -61,7 +61,7 @@ export default class MusicPlayer extends Component {
       return (
         <View style={[styles.absolute, {justifyContent: 'center'}]}>
           <ActivityIndicator
-            size={'large'}
+            size={46}
             color={Colors.colorLight}
             animating={true}
           />

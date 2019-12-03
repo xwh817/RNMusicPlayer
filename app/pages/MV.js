@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import Colors from '../values/Colors';
 import MVTab from './MVTab';
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   tabView: {
     flex: 1,
     backgroundColor: Colors.pageBg,
+    marginTop: StatusBar.currentHeight,
   },
   tabBarText: {
     fontSize: 12,

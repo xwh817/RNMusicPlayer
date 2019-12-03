@@ -70,7 +70,7 @@ export default class SongUtil {
       console.log(`imageUrl is empty: ${song.name}`);
     }
 
-    //console.log(`imageUrl: ${imgUrl}`);
+    console.log(`imageUrl: ${imgUrl}`);
     return imgUrl;
   }
 

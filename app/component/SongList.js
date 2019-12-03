@@ -19,12 +19,7 @@ export default class SongList extends Component {
         <FlatList
           data={this.props.songs}
           renderItem={this._renderItem}
-          //renderItem={(itemData) => this.getItemView(itemData.item)}
-          //ItemSeparatorComponent={this.getSeparator}
           keyExtractor={(item, index) => index.toString()}
-          //keyExtractor={(item) => item.id.toString()}
-          //onPressItem={(index) => alert('item ' + index + 'pressed')}
-          //refreshing={this.state.isLoading}
           getItemLayout={this._getItemLayout}
         />
       </View>

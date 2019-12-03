@@ -30,7 +30,7 @@ class Lyric {
       }
     });
 
-    //this._sortPosition();
+    this._sortPosition();
 
     this._initDuraton();
 

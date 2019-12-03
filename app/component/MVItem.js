@@ -73,7 +73,7 @@ export default class MVItem extends React.PureComponent {
           top: (imageHeight - size) / 2,
         }}
         size={size}
-        color={'green'}
+        color={Colors.colorPrimary}
         animating={true}
       />
     );
