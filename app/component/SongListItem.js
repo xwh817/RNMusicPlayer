@@ -19,14 +19,21 @@ export default class SongListItem extends React.PureComponent {
   };
 
   render() {
-    var item = this.props.item;
+    let item = this.props.item;
+    let source;
+    let imageUrl = SongUtil.getSongImage(item);
+    if (imageUrl == '') {
+      source = require('../images/music_cover.jpg');
+    } else {
+      source = {uri: imageUrl};
+    }
     //console.log('render item: ' + item.name);
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.item}>
           <Image
             roundAsCircle={true}
-            source={{uri: SongUtil.getSongImage(item)}}
+            source={source}
             style={{width: 60, height: 60, borderRadius: 6}}
           />
           <View style={styles.layoutText}>

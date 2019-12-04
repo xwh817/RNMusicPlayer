@@ -4,6 +4,7 @@ import TabNavigatore from './TabNavigator';
 import Colors from '../values/Colors';
 import MusicPlayer from '../pages/MusicPlayer';
 import PlayListDetail from '../pages/PlayListDetail';
+import SearchPage from '../pages/SearchPage';
 
 const rootNavigatior = createStackNavigator(
   {
@@ -11,19 +12,25 @@ const rootNavigatior = createStackNavigator(
       screen: TabNavigatore,
       navigationOptions: {
         header: null,
-      }
+      },
     },
     MusicPlayer: {
       screen: MusicPlayer,
       navigationOptions: {
         header: null,
-      }
+      },
     },
     PlayListDetail: {
       screen: PlayListDetail,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: ({navigation}) => ({
         headerTitle: navigation.state.params.playList.name, // 从导航对象中动态设置
-      })
+      }),
+    },
+    SearchPage: {
+      screen: SearchPage,
+      navigationOptions: {
+        header: null,
+      },
     },
   },
   {

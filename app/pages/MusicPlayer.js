@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
+  ImageBackground,
   Dimensions,
   findNodeHandle,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import Video from 'react-native-video';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -17,41 +18,83 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Colors from '../values/Colors';
 import MusicHeader from '../component/MusicHeader';
 import SongUtil from '../model/SongUtil';
-import { BlurView } from '@react-native-community/blur';
+import {BlurView} from '@react-native-community/blur';
 import RotateAnimator from '../component/RotateAnimator';
 import SeekBar from '../component/SeekBar';
 import LyricComonent from '../component/LyricComponent';
 import StringUtil from '../utils/StringUtil';
+import MusicApi from '../dao/MusicApi';
 
 export default class MusicPlayer extends Component {
   constructor(props) {
     super(props);
+    let song = this.props.navigation.getParam('song'); // 从导航中取数据
     this.state = {
       viewRef: null,
-      song: this.props.navigation.getParam('song'), // 从导航中取数据
+      song: song,
       isPlaying: false,
       position: 0,
-      duration: 1,  // 给个值，防止刚开始进度条就是满的
+      duration: 1, // 给个值，防止刚开始进度条就是满的
+      hasCover: SongUtil.getSongImage(song, imageSize) != '',
     };
     this.isPressed = false;
+  }
+
+  componentDidMount(){
+    if (!this.state.hasCover) { // 如果没有图片就去取。
+      this.loadSongDetail();
+    }
+  }
+
+  getImageSource() {
+    let source;
+    if (this.state.hasCover) {
+      source = {uri: SongUtil.getSongImage(this.state.song, imageSize)};
+    } else {
+      source = require('../images/music_cover.jpg');
+    }
+    return source;
   }
 
   imageLoaded() {
     console.log('imageLoaded ' + this.state.song.name);
     setTimeout(() => {
-      this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+      this.setState({
+        viewRef: findNodeHandle(this.backgroundImage),
+      });
     }, 200);
   }
 
+  loadSongDetail() {
+    MusicApi.getSongDetail(this.state.song.id).then(song => {
+      if (song) {
+        this.setState({
+          song: song,
+          hasCover: true,
+        });
+      }
+    });
+  }
+
   _renderBackground() {
-    if (this.state.viewRef != null) {
+    if (this.state.hasCover) {
       return (
-        <BlurView
-          style={styles.absolute}
-          viewRef={this.state.viewRef}
-          blurType="dark"
-          blurAmount={20}
-        />
+        <View style={styles.absolute}>
+          <Image
+            ref={img => {
+              this.backgroundImage = img;
+            }}
+            source={this.getImageSource()}
+            style={this.state.viewRef == null ? styles.hidden : styles.absolute}
+            onLoadEnd={this.imageLoaded.bind(this)}
+          />
+          <BlurView
+            style={styles.absolute}
+            viewRef={this.state.viewRef}
+            blurType="dark"
+            blurAmount={20}
+          />
+        </View>
       );
     }
   }
@@ -77,7 +120,7 @@ export default class MusicPlayer extends Component {
           {StringUtil.formatTime(this.state.position)}
         </Text>
         <SeekBar
-          style={{ flex: 1, marginLeft: 20, marginRight: 20 }}
+          style={{flex: 1, marginLeft: 20, marginRight: 20}}
           progressHeight={2}
           progress={this.state.position}
           min={0}
@@ -112,10 +155,10 @@ export default class MusicPlayer extends Component {
           name={'controller-jump-to-start'}
           size={40}
           color={iconColor}
-          onPress={() => { }}
+          onPress={() => {}}
         />
         <Entypo
-          style={{ marginLeft: 20, marginRight: 20 }}
+          style={{marginLeft: 20, marginRight: 20}}
           name={this.state.isPlaying ? 'controller-paus' : 'controller-play'}
           size={60}
           color={iconColor}
@@ -129,7 +172,7 @@ export default class MusicPlayer extends Component {
           name={'controller-next'}
           size={40}
           color={iconColor}
-          onPress={() => { }}
+          onPress={() => {}}
         />
       </View>
     );
@@ -144,16 +187,8 @@ export default class MusicPlayer extends Component {
           backgroundColor="transparent"
           translucent={true}
         />
-        <Image
-          ref={img => {
-            this.backgroundImage = img;
-          }}
-          source={{ uri: SongUtil.getSongImage(song, imageSize) }}
-          style={this.state.viewRef == null ? styles.hidden : styles.absolute}
-          onLoadEnd={this.imageLoaded.bind(this)}
-        />
         <Video
-          source={{ uri: SongUtil.getSongUrl(song) }} // Can be a URL or a local file.
+          source={{uri: SongUtil.getSongUrl(song)}} // Can be a URL or a local file.
           ref={ref => {
             this.player = ref;
           }}
@@ -167,9 +202,9 @@ export default class MusicPlayer extends Component {
         />
         {this._renderBackground()}
 
-        <SafeAreaView style={styles.content} forceInset={{ top: 'always' }}>
+        <SafeAreaView style={styles.content} forceInset={{top: 'always'}}>
           <MusicHeader
-            style={{ marginBottom: 26 }}
+            style={{marginBottom: 26}}
             song={song}
             onPress={() => this.props.navigation.pop()}
           />
@@ -185,23 +220,18 @@ export default class MusicPlayer extends Component {
             <RotateAnimator duration={24000} running={this.state.isPlaying}>
               <Image
                 roundAsCircle={true}
-                source={{ uri: SongUtil.getSongImage(song, imageSize) }}
+                source={this.getImageSource()}
                 style={styles.coverImage}
               />
-              
+
               {this._renderLoading()}
             </RotateAnimator>
           </TouchableOpacity>
 
           <LyricComonent song={song} position={this.state.position} />
-          
+
           {this._renderProgressBar()}
 
-          {/* <PlayerProgressBar
-            style={{ margin: 20 }}
-            position={this.state.position}
-            duration={this.state.duration}
-          /> */}
           {this._renderControllerBar()}
         </SafeAreaView>
       </View>
@@ -234,7 +264,7 @@ export default class MusicPlayer extends Component {
   };
 
   onEnd = () => {
-    this.setState({ paused: true });
+    this.setState({paused: true});
     this.player.seek(0);
     console.log('onEnd');
   };

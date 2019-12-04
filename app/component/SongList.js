@@ -7,10 +7,14 @@ const itemHeight = 70; // 如果可以确定高度，免去了渲染计算高度
 
 export default class SongList extends Component {
   render() {
-    if (this.props.songs == null) {
+    if (this.props.isLoading || this.props.songs == null) {
       return (
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator size={46} color={Colors.colorLight} animating={true} />
+          <ActivityIndicator
+            size={46}
+            color={Colors.colorLight}
+            animating={true}
+          />
         </View>
       );
     }

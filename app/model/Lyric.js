@@ -23,7 +23,7 @@ class Lyric {
             this.items[index] = new LyricItem(index, position, content);
             index++;
           } else {
-            //print('Lyric: 不解析的歌词：$line');
+            //console.log('Lyric: 不解析的歌词：$line');
           }
         }
         
@@ -49,7 +49,7 @@ class Lyric {
     }
 
     if (!isSorted) {
-      print('歌词无序，进行排序');
+      console.log('歌词无序，进行排序');
       this.items.sort((left, right) => left.position - right.position);
 
       for(let i=0; i<this.items.length; i++) {
@@ -75,7 +75,7 @@ class Lyric {
       }
     } catch (e) {
       position = -1;
-      //print(str + e.toString());
+      //console.log(str + e.toString());
     }
 
     return position;

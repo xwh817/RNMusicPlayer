@@ -1,37 +1,46 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, Dimensions, StatusBar } from 'react-native';
-import MusicApi from '../dao/MusicApi';
+import React, {Component} from 'react';
+import {
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 import SongUtil from '../model/SongUtil';
 import Swiper from 'react-native-swiper';
 import Colors from '../values/Colors';
 
 export default class ImageSwiper extends Component {
-
-  _renderOne(song) {
-    return (<View style={{
-      height: imageHeight,
-    }}>
-      <Image
-        key={song.id.toString()}
-        source={{ uri: SongUtil.getSongImage(song, 0, 600, 300) }}
-        style={{ width: screen.width, height: imageHeight }}
-      />
-    </View>);
+  constructor(props) {
+    super(props);
+    this.imageHeight = this.props.height
   }
 
-  render() {
+  _renderOne(song) {
     return (
-      <View style={{ height: imageHeight }}>
-        <Swiper autoplay={true} activeDotColor={Colors.colorLight}>
-          {
-            this.props.songs.map(song => this._renderOne(song))
-          }
-        </Swiper>
+      <View
+        key={song.id.toString()}
+        style={[{height: this.imageHeight}, this.props.style]}>
+        <Image
+          source={{uri: SongUtil.getSongImage(song, 0, 600, 300)}}
+          style={{width: screen.width, height: this.imageHeight}}
+        />
       </View>
     );
   }
 
+  render() {
+    return (
+      <View style={{height: this.imageHeight}}>
+        <Swiper
+          autoplay={true}
+          activeDotColor={Colors.colorLight}
+          paginationStyle={{position: 'absolute', bottom: 10}}
+          dotColor={'#ffffff99'}
+          dotStyle={{margin: 0}}>
+          {this.props.songs.map(song => this._renderOne(song))}
+        </Swiper>
+      </View>
+    );
+  }
 }
 
 const screen = Dimensions.get('window');
-var imageHeight = screen.width / 2;

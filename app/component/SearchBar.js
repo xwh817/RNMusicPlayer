@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, Dimensions, StatusBar } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
+import { StyleSheet, View, TextInput } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../values/Colors';
 
 
 export default class SearchBar extends Component {
 
+  value = '';
+
+  getValue() {
+    return this.value;
+  }
+
   render() {
+    let enable = true;
+    if (this.props.enable != undefined) {
+      enable = this.props.enable;
+    }
     return (
-      <View style={[styles.container, this.props.style]}>
+      <View style={[this.props.style, styles.container]}>
         <AntDesign name={'search1'} size={20} color={Colors.colorPrimary} />
-        <TextInput style={styles.text}
+        <TextInput
+          style={styles.text}
           placeholder={'请输入你想听的'}
-          editable={true}
+          editable={enable}
+          autoFocus={enable}
+          onChangeText={value => (this.value = value)}
         />
-        <Entypo name={'mic'} size={20} color={Colors.colorPrimary} />
-      </View>);
+        <Feather name={'mic'} size={20} color={Colors.colorPrimary} />
+      </View>
+    );
   }
 
 }
@@ -27,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 36,
     borderRadius: 18,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     backgroundColor: '#ffffffdd',
     alignItems: 'center',
   },

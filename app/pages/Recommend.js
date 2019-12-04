@@ -1,26 +1,49 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar, FlatList, Dimensions } from 'react-native';
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  FlatList,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import MusicApi from '../dao/MusicApi';
 import SongListItem from '../component/SongListItem';
 import ImageSwiper from '../component/ImageSwiper';
 import SearchBar from '../component/SearchBar';
+import Colors from '../values/Colors';
+import { StackViewStyleInterpolator } from 'react-navigation-stack';
 
 export default class Recommend extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      newSongs: [],
       items: [
         {
           type: 'header',
           key: 'header',
-        }
+        },
       ],
+      topOpacity: 0,
+      topMargin: 0,
     };
     this.mount = false;
   }
 
   loadData() {
-    MusicApi.getTopSongs(0)
+    MusicApi.getNewSongs()
+      .then(songs => {
+        if (this.mount) {
+          this.setState({
+            newSongs: songs.slice(0, 5),
+          });
+        }
+      })
+      .catch(error => console.error(error));
+
+    MusicApi.getTopSongs(1)
       .then(songs => {
         if (this.mount) {
           this.setState({
@@ -43,7 +66,7 @@ export default class Recommend extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <StatusBar
           barStyle="dark-content"
           backgroundColor="transparent"
@@ -54,63 +77,80 @@ export default class Recommend extends Component {
           data={this.state.items}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index.toString()}
-          getItemLayout={this._getItemLayout}
+          onScroll={this.onScroll}
         />
 
-        <SearchBar style={styles.searchBar} />
-
+        <View
+          style={{
+            backgroundColor: Colors.colorPrimary,
+            position: 'absolute',
+            width: screen.width,
+            height: searchBarBgHeight,
+            alignItems: 'center',
+            opacity: this.state.topOpacity,
+          }}
+        />
+        <SearchBar
+          style={styles.searchBar}
+          height={searchBarHeight}
+          enable={false}
+        />
+        <Text
+          style={styles.searchBar}
+          height={searchBarHeight}
+          onPress={() => {
+            console.log('onPress');
+            this.props.navigation.navigate('SearchPage', {
+              transitionType: 'forFade',
+            });
+          }}>
+          {' '}
+        </Text>
       </View>
     );
   }
 
+  onScroll = event => {
+    let y = event.nativeEvent.contentOffset.y;
+
+    let opacity = y > swiperOffset ? 1 : y / swiperOffset;
+    let margin = y > swiperOffset ? swiperOffset / 2 : y / 2;
+    //console.log(y);
+    this.setState({
+      topOpacity: opacity,
+      topMargin: margin,
+    });
+  };
 
   _onItemPress = item => {
     console.log('_onItemPressed: ' + item.name);
-    this.props.navigation.navigate('MusicPlayer', { song: item });
+    this.props.navigation.navigate('MusicPlayer', {song: item});
   };
 
-  _renderItem = ({ item }) => {
+  _renderItem = ({item}) => {
     if (item.type == 'header') {
-      return (<ImageSwiper songs={this.state.items.length > 1 ? this.state.items.slice(1, 6) : []} />);
+      return <ImageSwiper height={swiperHeight} songs={this.state.newSongs} />;
     } else {
-      return (<SongListItem item={item} onPress={this._onItemPress} />);
+      return <SongListItem item={item} onPress={this._onItemPress} />;
     }
   };
-
-
-
 }
 
 const screen = Dimensions.get('window');
+const searchBarPaddingVertical = 10;
+const swiperHeight = (screen.width * 52) / 90;
+const searchBarHeight = 36;
+const searchBarPaddingHorizal = 36;
+const searchBarBgHeight =
+  StatusBar.currentHeight + searchBarHeight + searchBarPaddingVertical * 2;
+const swiperOffset = swiperHeight - searchBarBgHeight;
+
 const styles = StyleSheet.create({
-  wrapper: {},
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB'
+  searchBar: {
+    width: screen.width - searchBarPaddingHorizal * 2,
+    height: searchBarHeight,
+    position: 'absolute',
+    top: StatusBar.currentHeight + searchBarPaddingVertical,
+    marginHorizontal: searchBarPaddingHorizal,
   },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5'
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9'
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold'
-  },
-  searchBar: { 
-    width: screen.width - 32 * 2,
-    position: 'absolute', 
-    top: StatusBar.currentHeight + 2,
-    marginHorizontal: 32,
-   }
-})
+});

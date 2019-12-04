@@ -34,6 +34,10 @@ export default class MusicApi {
     );
   }
 
+  static getNewSongs() {
+    return HttpUtil.get(this.URL_NEW_SONGS).then(data => data['result']);
+  }
+
   static getTopSongs(listId) {
     return HttpUtil.get(this.URL_TOP_SONGS + listId).then(
       data => data['playlist']['tracks'],
@@ -60,20 +64,30 @@ export default class MusicApi {
   }
 
   static getLyric(id) {
-    return HttpUtil.get(this.URL_GET_LYRIC + id).then(
-      data => {
-        if (data['nolyric']){
-          return '';
-        }else {
-          return data['lrc']['lyric'];
-        }
-      },
-    );
+    return HttpUtil.get(this.URL_GET_LYRIC + id).then(data => {
+      if (data['nolyric']) {
+        return '';
+      } else {
+        return data['lrc']['lyric'];
+      }
+    });
   }
 
   static getMVUrl(id) {
     return HttpUtil.get(this.URL_MV_DETAIL + id).then(
       data => data['data']['brs']['480'],
+    );
+  }
+
+  static search(keywords) {
+    return HttpUtil.get(this.URL_SEARCH + keywords).then(
+      data => data['result']['songs'],
+    );
+  }
+  
+  static getSongDetail(id) {
+    return HttpUtil.get(this.URL_SONG_DETAIL +id).then(
+      data => data['songs'][0],
     );
   }
 }

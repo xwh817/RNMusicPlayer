@@ -30,7 +30,7 @@ export default class LyricComonent extends Component {
           lyric = new Lyric(str);
         }
 
-        //console.log("加载歌词：" + lyric);
+        //console.log("加载歌词：" + str);
         if (this.mount) {
           this.setState({
             isLoading: false,
