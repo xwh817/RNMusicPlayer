@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
+import React, { Component } from 'react';
+import { View, StatusBar } from 'react-native';
 import SongList from '../component/SongList';
 import MusicApi from '../dao/MusicApi';
+import Colors from '../values/Colors';
 
 export default class PlayListDetail extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +38,14 @@ export default class PlayListDetail extends Component {
 
   render() {
     return (
-      <SongList navigation={this.props.navigation} songs={this.state.songs} />
+      <View style={{flex:1}}>
+        <StatusBar
+          barStyle={'light-content'}
+          backgroundColor={Colors.colorPrimary}
+          translucent={false}
+        />
+        <SongList navigation={this.props.navigation} songs={this.state.songs} />
+      </View>
     );
   }
 }

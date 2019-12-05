@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, StatusBar } from 'react-native';
 import StorageUtil from '../utils/StorageUtil';
 import SongList from '../component/SongList';
+import { connect } from "react-redux"
+import { barStyleDark } from "../redux/actions"
 
-export default class Favorite extends Component {
+class Favorite extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +36,7 @@ export default class Favorite extends Component {
       if (this.state.songs == null || StorageUtil.isDataChanged) {
         this.loadData();
       }
+      StatusBar.setBarStyle('dark-content');
     });
   }
 
@@ -54,9 +57,19 @@ export default class Favorite extends Component {
     }
 
     return (
-      <View style={{flex: 1, marginTop: StatusBar.currentHeight}}>
+      <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
         <SongList navigation={this.props.navigation} songs={songs} />
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    barStyle: state.viewStyle.barStyle,
+  }
+}
+// 对当前页面进行包装，进行dispatch到props的映射。
+export default connect(
+  mapStateToProps, { barStyleDark })(Favorite);
+

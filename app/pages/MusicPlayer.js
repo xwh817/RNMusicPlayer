@@ -88,12 +88,13 @@ export default class MusicPlayer extends Component {
             style={this.state.viewRef == null ? styles.hidden : styles.absolute}
             onLoadEnd={this.imageLoaded.bind(this)}
           />
-          <BlurView
+          {this.state.viewRef != null && (<BlurView
             style={styles.absolute}
             viewRef={this.state.viewRef}
             blurType="dark"
             blurAmount={20}
-          />
+          />)}
+          
         </View>
       );
     }

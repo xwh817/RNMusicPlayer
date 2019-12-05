@@ -27,6 +27,21 @@ export default class MV extends Component {
 
   }
 
+    // 页面加载完成之后
+    componentDidMount() {
+      this.mount = true;
+      // 监听页面focus
+      this._navListener = this.props.navigation.addListener('didFocus', () => {
+        console.log("MV didFocus ");
+        StatusBar.setBarStyle('dark-content');
+      });
+    }
+  
+    componentWillUnmount() {
+      this.mount = false;
+      this._navListener.remove();
+    }
+
   onChildScroll = (isScrolling) => {
     this.setState({
       locked: isScrolling

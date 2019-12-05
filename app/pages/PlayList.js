@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, StatusBar } from 'react-native';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
@@ -24,6 +24,22 @@ const types = [
 ];
 
 export default class PlayList extends Component {
+
+  // 页面加载完成之后
+  componentDidMount() {
+    this.mount = true;
+    // 监听页面focus
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      console.log("PlayList didFocus ");
+      StatusBar.setBarStyle('dark-content');
+    });
+  }
+
+  componentWillUnmount() {
+    this.mount = false;
+    this._navListener.remove();
+  }
+
   render() {
     return (
       <ScrollableTabView

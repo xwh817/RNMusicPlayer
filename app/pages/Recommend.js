@@ -14,8 +14,11 @@ import ImageSwiper from '../component/ImageSwiper';
 import SearchBar from '../component/SearchBar';
 import Colors from '../values/Colors';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
+import {connect} from "react-redux"
+import {barStyleLight} from "../redux/actions"
 
-export default class Recommend extends Component {
+
+class Recommend extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +26,6 @@ export default class Recommend extends Component {
       items: [
         {
           type: 'header',
-          key: 'header',
         },
       ],
       topOpacity: 0,
@@ -58,21 +60,22 @@ export default class Recommend extends Component {
   componentDidMount() {
     this.mount = true;
     this.loadData();
+
+    // 监听页面focus
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      console.log("Recommend didFocus ");
+      StatusBar.setBarStyle('light-content');
+    });
   }
 
   componentWillUnmount() {
     this.mount = false;
+    this._navListener.remove();
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="transparent"
-          translucent={true}
-        />
-
         <FlatList
           data={this.state.items}
           renderItem={this._renderItem}
@@ -153,4 +156,23 @@ const styles = StyleSheet.create({
     top: StatusBar.currentHeight + searchBarPaddingVertical,
     marginHorizontal: searchBarPaddingHorizal,
   },
-});
+  searchBar: { 
+    width: screen.width - 32 * 2,
+    position: 'absolute', 
+    top: StatusBar.currentHeight + 2,
+    marginHorizontal: 32,
+   }
+})
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    barStyle: state.viewStyle.barStyle,
+  }
+}
+
+// 对当前页面进行包装，进行dispatch到props的映射。
+export default connect(
+  mapStateToProps, {barStyleLight})(Recommend);
+
