@@ -23,13 +23,14 @@ export default class PlayListDetail extends Component {
           });
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }
 
   // 页面加载完成之后，获取数据。
   componentDidMount() {
     this.mount = true;
     this.loadData();
+    StatusBar.setBarStyle('light-content');
   }
 
   componentWillUnmount() {

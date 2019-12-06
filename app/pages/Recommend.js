@@ -43,7 +43,7 @@ class Recommend extends Component {
           });
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
 
     MusicApi.getTopSongs(1)
       .then(songs => {
@@ -53,7 +53,7 @@ class Recommend extends Component {
           });
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }
 
   // 页面加载完成之后，获取数据。
@@ -65,6 +65,8 @@ class Recommend extends Component {
     this._navListener = this.props.navigation.addListener('didFocus', () => {
       console.log("Recommend didFocus ");
       StatusBar.setBarStyle('light-content');
+      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor('transparent');
     });
   }
 
@@ -96,6 +98,7 @@ class Recommend extends Component {
         <SearchBar
           style={styles.searchBar}
           height={searchBarHeight}
+          focus={false}
           enable={false}
         />
         <Text
@@ -155,13 +158,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: StatusBar.currentHeight + searchBarPaddingVertical,
     marginHorizontal: searchBarPaddingHorizal,
-  },
-  searchBar: { 
-    width: screen.width - 32 * 2,
-    position: 'absolute', 
-    top: StatusBar.currentHeight + 2,
-    marginHorizontal: 32,
-   }
+  }
 })
 
 

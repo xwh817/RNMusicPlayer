@@ -44,6 +44,7 @@ export default class MusicPlayer extends Component {
     if (!this.state.hasCover) { // 如果没有图片就去取。
       this.loadSongDetail();
     }
+    StatusBar.setBarStyle('light-content');
   }
 
   getImageSource() {

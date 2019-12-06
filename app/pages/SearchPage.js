@@ -6,12 +6,14 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MusicApi from '../dao/MusicApi';
 import SongList from '../component/SongList';
 import SearchBar from '../component/SearchBar';
 import Colors from '../values/Colors';
+import Toast from 'react-native-easy-toast';
 
 export default class SearchPage extends Component {
   constructor(props) {
@@ -23,6 +25,10 @@ export default class SearchPage extends Component {
   }
 
   loadData(keywords) {
+    if (keywords == '') {
+      this.toast.show('请输入你想听的');
+      return;
+    }
     this.setState({
       isLoading: true,
     });
@@ -34,9 +40,10 @@ export default class SearchPage extends Component {
             isLoading: false,
             songs: songs,
           });
+          Keyboard.dismiss();
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
   }
 
   // 页面加载完成之后，获取数据。
@@ -50,7 +57,7 @@ export default class SearchPage extends Component {
 
   renderContent() {
     let songs = this.state.songs;
-    if (songs == null) {
+    if (songs == null && !this.state.isLoading) {
       return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Text
@@ -87,6 +94,7 @@ export default class SearchPage extends Component {
           />
           <SearchBar
             ref={ref => (this.searchBar = ref)}
+            focus={true}
             style={styles.searchBar}
             height={36}
           />
@@ -100,6 +108,15 @@ export default class SearchPage extends Component {
         </View>
 
         {this.renderContent()}
+
+
+        <Toast
+          ref={toast => {
+            this.toast = toast;
+          }}
+          position="center"
+          style={{ backgroundColor: Colors.colorPrimary }}
+        />
       </View>
     );
   }

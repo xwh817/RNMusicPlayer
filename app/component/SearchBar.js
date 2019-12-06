@@ -4,7 +4,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../values/Colors';
 
-
 export default class SearchBar extends Component {
 
   value = '';
@@ -13,11 +12,8 @@ export default class SearchBar extends Component {
     return this.value;
   }
 
-  render() {
-    let enable = true;
-    if (this.props.enable != undefined) {
-      enable = this.props.enable;
-    }
+  render() { 
+    let enable = this.props.enable == undefined ? true : this.props.enable;
     return (
       <View style={[this.props.style, styles.container]}>
         <AntDesign name={'search1'} size={20} color={Colors.colorPrimary} />
@@ -25,7 +21,7 @@ export default class SearchBar extends Component {
           style={styles.text}
           placeholder={'请输入你想听的'}
           editable={enable}
-          autoFocus={enable}
+          autoFocus={this.props.focus}
           onChangeText={value => (this.value = value)}
         />
         <Feather name={'mic'} size={20} color={Colors.colorPrimary} />
