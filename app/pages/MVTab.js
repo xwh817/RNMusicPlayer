@@ -27,7 +27,10 @@ export default class MVTab extends Component {
           });
         }
       })
-      .catch(error => this.toast.show('网络请求失败'));
+      .catch(error => {
+        console.log(JSON.stringify(error));
+        this.toast.show('网络请求失败');
+      });
   }
 
   // 页面加载完成之后，获取数据。
@@ -85,7 +88,6 @@ export default class MVTab extends Component {
   _onViewableItemsChanged = changed => {
     //console.log(changed);
   };
-
 }
 
 //列表滚动变化监听配置

@@ -319,12 +319,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center', // 子元素沿主轴的对齐方式
     //marginTop: 16,
-    marginBottom: 26,
+    marginBottom: 20,
   },
   progressBar: {
     flexDirection: 'row',
     alignItems: 'center', // 子元素沿主轴的对齐方式
-    margin: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom:8
   },
   textTime: {
     fontSize: 12,

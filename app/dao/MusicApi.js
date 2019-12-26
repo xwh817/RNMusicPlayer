@@ -47,7 +47,7 @@ export default class MusicApi {
   static getMVList(url) {
     return HttpUtil.get(url).then(data => {
       if (url == this.URL_MV_PERSONAL) {
-        return data.map(item => this._convertMV(item));
+        return data['result'].map(item => this._convertMV(item));
       } else {
         return data['data'];
       }

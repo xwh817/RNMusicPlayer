@@ -16,7 +16,7 @@ export default class MV extends Component {
     this.types = {
       "最新": MusicApi.URL_MV_FIRST,
       "Top": MusicApi.URL_MV_TOP,
-      '推荐': MusicApi.URL_MV_PERSONAL,
+      '推荐': MusicApi.URL_MV_PERSONAL
     };
 
     this.areas = ['内地', '港台', '欧美', '日本', '韩国'];
