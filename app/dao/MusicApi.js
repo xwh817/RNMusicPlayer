@@ -1,7 +1,7 @@
 import HttpUtil from '../utils/HttpUtil';
 
 export default class MusicApi {
-  static URL_ROOT = 'http://music.turingmao.com';
+  static URL_ROOT = 'http://120.24.162.39:20195';
   static URL_PLAY_LIST = `${this.URL_ROOT}/top/playlist?cat=`;
   static URL_PLAY_LIST_DETAIL = `${this.URL_ROOT}/playlist/detail?id=`;
   static URL_NEW_SONGS = `${this.URL_ROOT}/personalized/newsong`;

@@ -135,17 +135,22 @@ android {
         versionName "1.0"
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
+ 
+        // 选择打包时选取的so文件，x86时模拟上的环境。尽量只选一个，不然安装包会太大
+        ndk {
+            abiFilters "arm64-v8a" //,"armeabi-v7a","x86_64","x86"
+        }
     }
-    splits {
+    /* splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
-    }
+    } */
     signingConfigs {
-        debug {
+        config {
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
@@ -154,18 +159,18 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.config
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.config
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
     // applicationVariants are e.g. debug, release
-    applicationVariants.all { variant ->
+    /* applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
@@ -177,7 +182,7 @@ android {
             }
 
         }
-    }
+    } */
 }
 
 dependencies {
