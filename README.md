@@ -7,24 +7,24 @@
 - 关于播放源：采用了开源项目[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)，如想稳定运行请自行下载并搭建自己的服务。
 - 说明：本App仅限于学习，不得用于商业用途。
 
-- 试用apk下载地址：[react_native_music_release_1.0.apk](https://xwh817.github.io/apks/rn_music_release.apk)
-- 扫描二维码下载：<img src="./screenshot/qr_download.png">
+- 试用apk下载地址：[react_native_music_release_1.0.apk](http://xwh817.gitee.io/files/apks/rn_music_release.apk)
+- 扫描二维码下载：<img src="http://xwh817.gitee.io/files/images/rn_music/qr_download.png">
 
 ## 界面例图
 
 | 首页 |  播放页 |
 | :------: | :----: |
-| ![](./screenshot/home.jpg)|  ![](./screenshot/player.jpg)    |
+| ![](http://xwh817.gitee.io/files/images/rn_music/home.jpg)|  ![](http://xwh817.gitee.io/files/images/rn_music/player.jpg)    |
 
 
 | 歌单 |  详情 |
 | :------: | :----: |
-| ![](./screenshot/playlist.jpg)|  ![](./screenshot/playlistDetail.jpg)    |
+| ![](http://xwh817.gitee.io/files/images/rn_music/playlist.jpg)|  ![](http://xwh817.gitee.io/files/images/rn_music/playlistDetail.jpg)    |
 
 
 | 歌单 |  MV视频 |
 | :------: | :----: |
-| ![](./screenshot/playlist2.jpg)|  ![](./screenshot/mv.jpg)    |
+| ![](http://xwh817.gitee.io/files/images/rn_music/playlist2.jpg)|  ![](http://xwh817.gitee.io/files/images/rn_music/mv.jpg)    |
 
 
 
