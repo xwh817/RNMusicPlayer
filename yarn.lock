@@ -695,6 +695,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.5.5":
+  version "7.10.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.5.tgz#303d8bd440ecd5a491eae6117fd3367698674c5c"
+  integrity sha512-otddXKhdNn7d0ptoFRHtMLa8LqDxLYwTjB4nYgM1yy5N6gU/MUf8zqyyLltCH3yAVitBzmwK4us+DD0l/MauAg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.0.0", "@babel/template@^7.4.0", "@babel/template@^7.7.0":
   version "7.7.0"
   resolved "https://registry.npm.taobao.org/@babel/template/download/@babel/template-7.7.0.tgz#4fadc1b8e734d97f56de39c77de76f2562e597d0"
@@ -948,6 +955,13 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
+
+"@react-native-community/async-storage@^1.6.3":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.11.0.tgz#bf81b8813080846f150c67f531987c429b442166"
+  integrity sha512-Pq9LlmvtCEKAGdkyrgTcRxNh2fnHFykEj2qnRYijOl1pDIl2MkD5IxaXu5eOL0wgOtAl4U//ff4z40Td6XR5rw==
+  dependencies:
+    deep-assign "^3.0.0"
 
 "@react-native-community/blur@^3.3.1":
   version "3.3.1"
@@ -2142,6 +2156,13 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npm.taobao.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+
+deep-assign@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/deep-assign/-/deep-assign-3.0.0.tgz#c8e4c4d401cba25550a2f0f486a2e75bc5f219a2"
+  integrity sha512-YX2i9XjJ7h5q/aQ/IM9PEwEnDqETAIYbggmdDB3HLTlSgo1CxPsj6pvhPG68rq6SVE0+p+6Ywsm5fTYNrYtBWw==
+  dependencies:
+    is-obj "^1.0.0"
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -3425,6 +3446,11 @@ is-number@^3.0.0:
   dependencies:
     kind-of "^3.0.2"
 
+is-obj@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
+  integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
+
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npm.taobao.org/is-plain-object/download/is-plain-object-2.0.4.tgz#2c163b3fafb1b606d9d17928f05c2a1c38e07677"
@@ -4198,9 +4224,9 @@ lodash.unescape@4.0.1:
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5, lodash@^4.3.0:
-  version "4.17.15"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz?cache=0&sync_timestamp=1571657272199&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -5440,6 +5466,13 @@ react-native-scrollable-tab-view@^1.0.0:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
+react-native-swiper@^1.6.0-nightly.5:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
+  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@^2.11.0:
   version "2.11.0"
   resolved "https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-2.11.0.tgz?cache=0&sync_timestamp=1574249205467&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-tab-view%2Fdownload%2Freact-native-tab-view-2.11.0.tgz#2e57d1f617ccc88c7f452708804f3409f880b700"
@@ -5522,6 +5555,17 @@ react-navigation@^4.0.10:
   dependencies:
     "@react-navigation/core" "^3.5.1"
     "@react-navigation/native" "^3.6.2"
+
+react-redux@^7.1.3:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.0.tgz#f970f62192b3981642fec46fd0db18a074fe879d"
+  integrity sha512-EvCAZYGfOLqwV7gh849xy9/pt55rJXPwmYvI4lilPM5rUT/1NxuuN59ipdBksRVSvz0KInbPnp4IfoXJXCqiDA==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    hoist-non-react-statics "^3.3.0"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.9.0"
 
 react-refresh@^0.4.0:
   version "0.4.2"
@@ -5606,6 +5650,14 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
+redux@^4.0.4:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
+  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
+
 regenerate-unicode-properties@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npm.taobao.org/regenerate-unicode-properties/download/regenerate-unicode-properties-8.1.0.tgz#ef51e0f0ea4ad424b77bf7cb41f3e015c70a3f0e"
@@ -5622,6 +5674,11 @@ regenerator-runtime@^0.13.2:
   version "0.13.3"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
   integrity sha1-fPanfY9cb2Drc8X8GVWyzrAea/U=
+
+regenerator-runtime@^0.13.4:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
+  integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
 
 regenerator-transform@^0.14.0:
   version "0.14.1"
@@ -6354,6 +6411,11 @@ symbol-observable@1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
   integrity sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=
+
+symbol-observable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
 symbol-tree@^3.2.2:
   version "3.2.4"
